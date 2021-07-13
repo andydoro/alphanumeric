@@ -1,10 +1,5 @@
-# Alphanumeric Date Time Holidays
+# Alphanumeric Display 
 
-displays time, date, sunrise/sunset, and special holidays
+[https://andydoro.com/alphanum/](https://andydoro.com/alphanum/)
 
-## Libraries
-* Adafruit_LEDBackpack
-* Adafruit_GFX
-* [RTClib](https://github.com/adafruit/RTClib)
-* [DST_RTC](https://github.com/andydoro/DST_RTC)
-* Dusk2Dawn - needed to be modified to work with M0 processor
+[Feather](https://www.adafruit.com/feather)-compatible 32 character alphanumeric display, can be programmed to display any text. Combine with a real time clock to create a clock and calendar, or WiFi module to display news headline or weather information. A Bluetooth module allows for Bluetooth-programmable signage
