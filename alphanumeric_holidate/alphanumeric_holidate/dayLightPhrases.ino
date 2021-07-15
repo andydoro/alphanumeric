@@ -88,15 +88,24 @@ void dayLightPhrases(DateTime theTime) {
     strcat(sunrisePhrase, s_will_be_at);
 
     strcat(sunrisePhrase, SR_hour_str);
-    strcat(sunrisePhrase, s_colon); // ":" looks weird
+    // get string length here
+    SR_dotPos = strlen(sunrisePhrase) - 1;
+    Serial.print("dot Pos:");
+    //Serial.println(SR_dotPos);
+    //strcat(sunrisePhrase, s_colon); // ":" looks weird
     strcat(sunrisePhrase, SR_min_str);
     strcat(sunrisePhrase, s_am);
   } else if ((theHour == sunriseHour) && (theMin == sunriseMin)) {
     strcat(sunrisePhrase, s_is_now);
+    SR_dotPos = -1;
   } else {
     strcat(sunrisePhrase, s_was_at);
     strcat(sunrisePhrase, SR_hour_str);
-    strcat(sunrisePhrase, s_colon); // ":" looks weird
+    // get string length here
+    SR_dotPos = strlen(sunrisePhrase) - 1;
+    Serial.print("dot Pos:");
+    //Serial.println(SR_dotPos);
+    //strcat(sunrisePhrase, s_colon); // ":" looks weird
     strcat(sunrisePhrase, SR_min_str);
     strcat(sunrisePhrase, s_am);
   }
@@ -114,15 +123,21 @@ void dayLightPhrases(DateTime theTime) {
   if ((theHour < sunsetHour) || ((theHour == sunsetHour) && (theMin < sunsetMin))) {
     strcat(sunsetPhrase, s_will_be_at);
     strcat(sunsetPhrase, SS_hour_str);
-    strcat(sunsetPhrase, s_colon); // ":" looks weird
+
+    // get dotPos
+    SS_dotPos = SS_DOTPOS;
+    //strcat(sunsetPhrase, s_colon); // ":" looks weird
     strcat(sunsetPhrase, SS_min_str);
     strcat(sunsetPhrase, s_pm);
   } else if ((theHour == sunsetHour) && (theMin == sunsetMin)) {
     strcat(sunsetPhrase, s_is_now);
+    SS_dotPos = -1;
   } else {
     strcat(sunsetPhrase, s_was_at);
     strcat(sunsetPhrase, SS_hour_str);
-    strcat(sunsetPhrase, s_colon); // ":" looks weird
+    //strcat(sunsetPhrase, s_colon); // ":" looks weird
+    // get dotPos
+    SS_dotPos = SS_DOTPOS;
     strcat(sunsetPhrase, SS_min_str);
     strcat(sunsetPhrase, s_pm);
   }

@@ -15,7 +15,11 @@ void morphStrings() {
 void setChars() {
   // set every digit to the buffer
   for (uint8_t i = 0; i < NUMCHARS; i++) {
-    alpha[i / 4].writeDigitAscii(i % 4, tempString[i]);
+    if (i == dotPos) {
+      alpha[i / 4].writeDigitAscii(i % 4, tempString[i], true); //write the '.' along with the character
+    } else {
+      alpha[i / 4].writeDigitAscii(i % 4, tempString[i]);
+    }
   }
 }
 

@@ -11,6 +11,10 @@
 #include "DST_RTC.h"
 #include "Dusk2Dawn_mod.h"
 
+// set time
+#include "Adafruit_seesaw.h"
+//#include <seesaw_neopixel.h>
+
 // const char strings
 const char s_1[] PROGMEM = "ONE";
 const char s_2[] PROGMEM = "TWO";
@@ -41,8 +45,6 @@ const char s_itis[] PROGMEM = "IT IS ";
 const char s_will_be_at[] PROGMEM = "WILL BE AT ";
 const char s_was_at[] PROGMEM = "WAS AT ";
 const char s_is_now[] PROGMEM = "IS HAPPENING NOW";
-
-const char s_colon[] PROGMEM = "."; // ":" looks weird on alphanumeric
 
 const char s_am[] PROGMEM = " AM";
 const char s_pm[] PROGMEM = " PM";
@@ -96,8 +98,38 @@ const char rulesDST[] = "US"; // US DST rules
 #define MORNINGCUTOFF 7  // when does daybrightness begin?   7am
 #define NIGHTCUTOFF 22 // when does nightbrightness begin? 10pm
 
-
 boolean firstTime = true; // save time recalculating sunrise/sunset
+
+int dotPos = -1; // location for dot
+
+int SR_dotPos = -1;
+int SS_dotPos = -1;
+
+const byte SS_DOTPOS = 26; // sunset dot doesn't changeh
+
+// rot encode constants
+
+#define SS_SWITCH        24
+//#define SS_NEOPIX        6
+
+#define SEESAW_ADDR          0x36
+
+
+boolean hasEncoder = true;
+
+Adafruit_seesaw ss;
+//seesaw_NeoPixel sspixel = seesaw_NeoPixel(1, SS_NEOPIX, NEO_GRB + NEO_KHZ800);
+int32_t encoder_position;
+
+
+boolean timeSetMode = false;
+
+byte timeSpanMode = 0; // keep track of what we're changing
+
+int timeSetCounter = 0;
+
+const int TIMESETCOUNTERLIMIT = 500;
+
 
 
 void setup() {
@@ -105,6 +137,50 @@ void setup() {
 
   delay(1000);
   Serial.begin(115200);
+
+  /*
+    if (! ss.begin(SEESAW_ADDR) || ! sspixel.begin(SEESAW_ADDR)) {
+      Serial.println("Couldn't find seesaw on default address");
+      while (1) delay(10);
+    }
+  */
+
+  // check for rot encoder
+  //ss.begin(SEESAW_ADDR);
+
+  if (! ss.begin(SEESAW_ADDR)) {
+    Serial.println("Couldn't find seesaw on default address");
+    //while (1) delay(10);
+    hasEncoder = false;
+  } else {
+    //sspixel.begin(SEESAW_ADDR);
+    Serial.println("seesaw started");
+
+    uint32_t version = ((ss.getVersion() >> 16) & 0xFFFF);
+    if (version  != 4991) {
+      Serial.print("Wrong firmware loaded? ");
+      Serial.println(version);
+      //  while (1) delay(10);
+    }
+    Serial.println("Found Product 4991");
+
+    // set not so bright!
+    // sspixel.setBrightness(20);
+    // sspixel.show();
+
+    // use a pin for the built in encoder switch
+    ss.pinMode(SS_SWITCH, INPUT_PULLUP);
+
+    // get starting position
+    encoder_position = ss.getEncoderPosition();
+
+    Serial.println("Turning on interrupts");
+    delay(10);
+    ss.setGPIOInterrupts((uint32_t)1 << SS_SWITCH, 1);
+    ss.enableEncoderInterrupt();
+  }
+
+
 
   // initialize all NUMALPHAS and clear
   for (uint8_t i = 0; i < NUMALPHAS; i++) {
@@ -178,79 +254,203 @@ void loop() {
   // put your main code here, to run repeatedly:
 
   // get the time
+  DateTime standardTime = rtc.now();
+  DateTime theTime = dst.calculateTime(standardTime); // takes into account DST
   //DateTime theTime = rtc.now();
-  DateTime theTime = dst.calculateTime(rtc.now()); // takes into account DST
-
-  byte theSec = theTime.second();
-  byte tenSec = theSec / 10; // use to figure out which mode to enter
-  //byte theHour = theTime.hour();
-
-  // sunrise sunset
-  // calculate once because it takes too long
-  byte theHour = theTime.hour();
-  byte theMin = theTime.minute();
+  //DateTime theTime = dst.calculateTime(rtc.now()); // takes into account DST
 
 
-  if (tenSec == 1) { // :10 - :19
-
-    if (theSec < 15) { // :10 - :14
-      // day of week
-      dotwPhrase(theTime.dayOfTheWeek());
-
-      // left justify
-      leftJustify();
-
-      // adjust brightness based on hour
-      if (theSec == 12) { // only adjust once per minute...
-        delay(1); // help with crashes?
-        adjustBrightness(theHour);
-
-        // get ready to calculate sunrise / sunset again
-        firstTime = true;
-
-        // only calculate once per minute, otherwise it's too slow
-        if (firstTime == true) {
-          dayLightPhrases(theTime);
-        }
-      }
-    } else { // :15 - :19
-      // date
-      datePhrase(theTime.month(), theTime.day());
-      rightJustify();
+  // rot encoder
+  if (hasEncoder) {
+    if (! ss.digitalRead(SS_SWITCH)) {
+      delay(200); // debounce?
+      //Serial.println("Button pressed!");
+      Serial.println("TIME SET MODE");
+      // go into time set mode
+      timeSetMode = true;
+      timeSetCounter = 0; // reset counter
     }
-
-  } else if (tenSec == 2) { // :20 - :29
-    // special dates
-    //byte theMon = theTime.month();
-    byte theDay = theTime.day();
-    // check for friday the 13th
-    if (theDay == 13 && theTime.dayOfTheWeek() == 5) {
-      // it's Friday the 13th!
-      strcpy(timePhrase, PSTR("YIKES IT'S FRIDAY THE THIRTEENTH"));
-    } else {
-      holidate(theTime.month(), theDay, theHour, theMin);
-    }
-  } else if (tenSec == 3) { // :30 - :39
-    strcpy(timePhrase, sunrisePhrase);
-
-  } else if (tenSec == 4) { // :40 - :49
-    strcpy(timePhrase, sunsetPhrase);
-
-  } else { // :50 - :09
-    // the time in words
-    genTimePhrase(theHour, theMin);
   }
 
-  printTheTime(theTime);
+  if (timeSetMode) {
 
-  Serial.println(F(timePhrase));
+    // button clicks
+    if (! ss.digitalRead(SS_SWITCH)) {
+      delay(200); // debounce?
+      //Serial.println("Button pressed!");
+      //Serial.println("TIME SET MODE");
+      // go into time set mode
+      //timeSetMode = true;
+      timeSpanMode++;
 
-  morphStrings();
+      if (timeSpanMode > 5) {
+        timeSpanMode = 0;
+      }
+      timeSetCounter = 0; // reset counter
+    }
 
-  setChars();
+    // encoder rotations
+    int32_t new_position = ss.getEncoderPosition();
+    // did we move arounde?
+    if (encoder_position != new_position) {
+      Serial.println(new_position);         // display new position
+      int32_t pos_diff = encoder_position - new_position; // get the difference
 
-  writeDisplays();
+      // create different modes to alter Y, M, D, H, S, etc
+      switch (timeSpanMode) {
+        case 0: standardTime = standardTime.unixtime() + pos_diff; // seconds
+          break;
+        case 1: standardTime = standardTime.unixtime() + (60 * pos_diff); // minutes
+          break;
+        case 2: standardTime = standardTime.unixtime() + (3600 * pos_diff); // hours
+          break;
+        case 3: standardTime = standardTime.unixtime() + (86400 * pos_diff); // days
+          break;
+        case 4: standardTime = standardTime.unixtime() + (2592000 * pos_diff); // months... err... inexact!
+          break;
+        case 5: standardTime = standardTime.unixtime() + (31536000 * pos_diff); // years
+          break;
+      }
 
-  delay(FLIPUPDELAY);
+      rtc.adjust(standardTime); // write to RTC
+      //theTime = dst.calculateTime(standardTime); // takes into account DST
+      //printTheTime(theTime);
+      timeSetCounter = 0; // reset counter
+      encoder_position = new_position;      // and save for next round
+    }
+
+    theTime = dst.calculateTime(standardTime); // takes into account DST
+    printTheTime(theTime);
+    // display time
+    uint16_t theYear = theTime.year();
+    byte theMon = theTime.month();
+    byte theDay = theTime.day();
+    byte theHour = theTime.hour();
+    byte theMin = theTime.minute();
+    byte theSec = theTime.second();
+
+    // char arrays for numbers
+    char year_str[5];
+    char mon_str[3];
+    char day_str[3];
+    char hour_str[3];
+    char min_str[3];
+    char sec_str[3];
+
+    // generate string based on the time
+    sprintf(year_str, "%4d", theYear);
+    sprintf(mon_str, "%2d", theMon);
+    sprintf(day_str, "%2d", theDay);
+    sprintf(hour_str, "%2d", theHour);
+    sprintf(min_str, "%2d", theMin);
+    sprintf(sec_str, "%2d", theSec);
+
+
+    // blink letters when chosen?
+    strcpy(tempString, PSTR("Y "));
+    strcat(tempString, year_str);
+    strcat(tempString, PSTR(" MO "));
+    strcat(tempString, mon_str);
+    strcat(tempString, PSTR(" D "));
+    strcat(tempString, day_str);
+    strcat(tempString, PSTR(" H "));
+    strcat(tempString, hour_str);
+    strcat(tempString, PSTR(" M "));
+    strcat(tempString, min_str);
+    strcat(tempString, PSTR(" S "));
+    strcat(tempString, sec_str);
+
+    Serial.println(F(tempString));
+
+    setChars();
+    writeDisplays();
+
+    timeSetCounter++;
+    if (timeSetCounter > TIMESETCOUNTERLIMIT) {
+      Serial.println("out of Time Set Mode");
+      timeSetMode = false;
+      timeSetCounter = 0;
+    }
+    delay(FLIPUPDELAY);
+
+  } else {
+
+    // default display modes
+
+    byte theSec = theTime.second();
+    byte tenSec = theSec / 10; // use to figure out which mode to enter
+    //byte theHour = theTime.hour();
+
+    // sunrise sunset
+    // calculate once because it takes too long
+    byte theHour = theTime.hour();
+    byte theMin = theTime.minute();
+
+    dotPos = -1; // default don't show dotPos
+
+    if (tenSec == 1) { // :10 - :19
+
+      if (theSec < 15) { // :10 - :14
+        // day of week
+        dotwPhrase(theTime.dayOfTheWeek());
+
+        // left justify
+        leftJustify();
+
+        // adjust brightness based on hour
+        if (theSec == 12) { // only adjust once per minute...
+          delay(1); // help with crashes?
+          adjustBrightness(theHour);
+
+          // get ready to calculate sunrise / sunset again
+          firstTime = true;
+
+          // only calculate once per minute, otherwise it's too slow
+          if (firstTime == true) {
+            dayLightPhrases(theTime);
+          }
+        }
+      } else { // :15 - :19
+        // date
+        datePhrase(theTime.month(), theTime.day());
+        rightJustify();
+      }
+
+    } else if (tenSec == 2) { // :20 - :29
+      // special dates
+      //byte theMon = theTime.month();
+      byte theDay = theTime.day();
+      // check for friday the 13th
+      if (theDay == 13 && theTime.dayOfTheWeek() == 5) {
+        // it's Friday the 13th!
+        strcpy(timePhrase, PSTR("YIKES IT'S FRIDAY THE THIRTEENTH"));
+      } else {
+        holidate(theTime.month(), theDay, theHour, theMin);
+      }
+    } else if (tenSec == 3) { // :30 - :39
+      strcpy(timePhrase, sunrisePhrase);
+      dotPos = SR_dotPos;
+
+    } else if (tenSec == 4) { // :40 - :49
+      strcpy(timePhrase, sunsetPhrase);
+      dotPos = SS_dotPos;
+
+    } else { // :50 - :09
+      // the time in words
+      genTimePhrase(theHour, theMin);
+    }
+
+    printTheTime(theTime);
+
+    Serial.println(F(timePhrase));
+
+    morphStrings();
+
+    setChars();
+
+    writeDisplays();
+
+    delay(FLIPUPDELAY);
+  }
 
 }
