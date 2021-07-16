@@ -10,6 +10,6 @@ void rightJustify() {
 void leftJustify() {
   int blanks = 32 - strlen(timePhrase);
   for (int i = 0; i < blanks; i++) {
-    strcat(timePhrase, " ");
+    strcat(timePhrase, s_space);
   }
 }

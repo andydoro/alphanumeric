@@ -51,6 +51,7 @@ const char s_pm[] PROGMEM = " PM";
 
 const char s_manhattanhenge[] PROGMEM = "      IT IS MANHATTANHENGE      ";
 
+const char s_space[] PROGMEM = " ";
 
 // New York City
 #define LATITUDE 40.6914
@@ -108,11 +109,10 @@ int SS_dotPos = -1;
 const byte SS_DOTPOS = 26; // sunset dot doesn't changeh
 
 // rot encode constants
-
-#define SS_SWITCH        24
+#define SS_SWITCH 24
 //#define SS_NEOPIX        6
 
-#define SEESAW_ADDR          0x36
+#define SEESAW_ADDR 0x36
 
 
 boolean hasEncoder = true;
@@ -122,7 +122,7 @@ Adafruit_seesaw ss;
 int32_t encoder_position;
 
 
-boolean timeSetMode = false;
+boolean enterTimeSetMode = false;
 
 byte timeSpanMode = 0; // keep track of what we're changing
 
@@ -130,6 +130,7 @@ int timeSetCounter = 0;
 
 const int TIMESETCOUNTERLIMIT = 500;
 
+const int SWITCH_DELAY = 50;
 
 
 void setup() {
@@ -255,7 +256,7 @@ void loop() {
 
   // get the time
   DateTime standardTime = rtc.now();
-  DateTime theTime = dst.calculateTime(standardTime); // takes into account DST
+  //DateTime theTime = dst.calculateTime(standardTime); // takes into account DST
   //DateTime theTime = rtc.now();
   //DateTime theTime = dst.calculateTime(rtc.now()); // takes into account DST
 
@@ -263,119 +264,21 @@ void loop() {
   // rot encoder
   if (hasEncoder) {
     if (! ss.digitalRead(SS_SWITCH)) {
-      delay(200); // debounce?
+      delay(SWITCH_DELAY); // debounce?
       //Serial.println("Button pressed!");
       Serial.println("TIME SET MODE");
       // go into time set mode
-      timeSetMode = true;
+      enterTimeSetMode = true;
       timeSetCounter = 0; // reset counter
     }
   }
 
-  if (timeSetMode) {
-
-    // button clicks
-    if (! ss.digitalRead(SS_SWITCH)) {
-      delay(200); // debounce?
-      //Serial.println("Button pressed!");
-      //Serial.println("TIME SET MODE");
-      // go into time set mode
-      //timeSetMode = true;
-      timeSpanMode++;
-
-      if (timeSpanMode > 5) {
-        timeSpanMode = 0;
-      }
-      timeSetCounter = 0; // reset counter
-    }
-
-    // encoder rotations
-    int32_t new_position = ss.getEncoderPosition();
-    // did we move arounde?
-    if (encoder_position != new_position) {
-      Serial.println(new_position);         // display new position
-      int32_t pos_diff = encoder_position - new_position; // get the difference
-
-      // create different modes to alter Y, M, D, H, S, etc
-      switch (timeSpanMode) {
-        case 0: standardTime = standardTime.unixtime() + pos_diff; // seconds
-          break;
-        case 1: standardTime = standardTime.unixtime() + (60 * pos_diff); // minutes
-          break;
-        case 2: standardTime = standardTime.unixtime() + (3600 * pos_diff); // hours
-          break;
-        case 3: standardTime = standardTime.unixtime() + (86400 * pos_diff); // days
-          break;
-        case 4: standardTime = standardTime.unixtime() + (2592000 * pos_diff); // months... err... inexact!
-          break;
-        case 5: standardTime = standardTime.unixtime() + (31536000 * pos_diff); // years
-          break;
-      }
-
-      rtc.adjust(standardTime); // write to RTC
-      //theTime = dst.calculateTime(standardTime); // takes into account DST
-      //printTheTime(theTime);
-      timeSetCounter = 0; // reset counter
-      encoder_position = new_position;      // and save for next round
-    }
-
-    theTime = dst.calculateTime(standardTime); // takes into account DST
-    printTheTime(theTime);
-    // display time
-    uint16_t theYear = theTime.year();
-    byte theMon = theTime.month();
-    byte theDay = theTime.day();
-    byte theHour = theTime.hour();
-    byte theMin = theTime.minute();
-    byte theSec = theTime.second();
-
-    // char arrays for numbers
-    char year_str[5];
-    char mon_str[3];
-    char day_str[3];
-    char hour_str[3];
-    char min_str[3];
-    char sec_str[3];
-
-    // generate string based on the time
-    sprintf(year_str, "%4d", theYear);
-    sprintf(mon_str, "%2d", theMon);
-    sprintf(day_str, "%2d", theDay);
-    sprintf(hour_str, "%2d", theHour);
-    sprintf(min_str, "%2d", theMin);
-    sprintf(sec_str, "%2d", theSec);
-
-
-    // blink letters when chosen?
-    strcpy(tempString, PSTR("Y "));
-    strcat(tempString, year_str);
-    strcat(tempString, PSTR(" MO "));
-    strcat(tempString, mon_str);
-    strcat(tempString, PSTR(" D "));
-    strcat(tempString, day_str);
-    strcat(tempString, PSTR(" H "));
-    strcat(tempString, hour_str);
-    strcat(tempString, PSTR(" M "));
-    strcat(tempString, min_str);
-    strcat(tempString, PSTR(" S "));
-    strcat(tempString, sec_str);
-
-    Serial.println(F(tempString));
-
-    setChars();
-    writeDisplays();
-
-    timeSetCounter++;
-    if (timeSetCounter > TIMESETCOUNTERLIMIT) {
-      Serial.println("out of Time Set Mode");
-      timeSetMode = false;
-      timeSetCounter = 0;
-    }
-    delay(FLIPUPDELAY);
-
+  if (enterTimeSetMode) {
+    timeSetMode(standardTime);
   } else {
 
     // default display modes
+    DateTime theTime = dst.calculateTime(standardTime); // takes into account DST
 
     byte theSec = theTime.second();
     byte tenSec = theSec / 10; // use to figure out which mode to enter
@@ -415,7 +318,6 @@ void loop() {
         datePhrase(theTime.month(), theTime.day());
         rightJustify();
       }
-
     } else if (tenSec == 2) { // :20 - :29
       // special dates
       //byte theMon = theTime.month();

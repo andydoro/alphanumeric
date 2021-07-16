@@ -90,7 +90,7 @@ void dayLightPhrases(DateTime theTime) {
     strcat(sunrisePhrase, SR_hour_str);
     // get string length here
     SR_dotPos = strlen(sunrisePhrase) - 1;
-    Serial.print("dot Pos:");
+    //Serial.print("dot Pos:");
     //Serial.println(SR_dotPos);
     //strcat(sunrisePhrase, s_colon); // ":" looks weird
     strcat(sunrisePhrase, SR_min_str);
@@ -103,7 +103,7 @@ void dayLightPhrases(DateTime theTime) {
     strcat(sunrisePhrase, SR_hour_str);
     // get string length here
     SR_dotPos = strlen(sunrisePhrase) - 1;
-    Serial.print("dot Pos:");
+    //Serial.print("dot Pos:");
     //Serial.println(SR_dotPos);
     //strcat(sunrisePhrase, s_colon); // ":" looks weird
     strcat(sunrisePhrase, SR_min_str);
@@ -114,7 +114,7 @@ void dayLightPhrases(DateTime theTime) {
   // left justify
   int blanks = 32 - strlen(sunrisePhrase);
   for (int i = 0; i < blanks; i++) {
-    strcat(sunrisePhrase, " ");
+    strcat(sunrisePhrase, s_space);
   }
 
 
