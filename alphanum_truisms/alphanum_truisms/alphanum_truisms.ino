@@ -52,7 +52,7 @@ void setup() {
 
   delay(1000);
 
-  Serial.begin(15200);
+  Serial.begin(115200);
 
   //make it more pseudorandom!
   randomSeed(analogRead(RANDOMPIN));
