@@ -53,6 +53,8 @@ const char s_manhattanhenge[] PROGMEM = "      IT IS MANHATTANHENGE      ";
 
 const char s_space[] PROGMEM = " ";
 
+const char s_title[] PROGMEM = "THIRTY-TWO CHARACTER WORD CLOCK ";
+
 // New York City
 #define LATITUDE 40.6914
 #define LONGITUDE -73.9899
@@ -139,16 +141,7 @@ void setup() {
   delay(1000);
   Serial.begin(115200);
 
-  /*
-    if (! ss.begin(SEESAW_ADDR) || ! sspixel.begin(SEESAW_ADDR)) {
-      Serial.println("Couldn't find seesaw on default address");
-      while (1) delay(10);
-    }
-  */
-
   // check for rot encoder
-  //ss.begin(SEESAW_ADDR);
-
   if (! ss.begin(SEESAW_ADDR)) {
     Serial.println("Couldn't find seesaw on default address");
     //while (1) delay(10);
@@ -183,39 +176,6 @@ void setup() {
 
 
 
-  // initialize all NUMALPHAS and clear
-  for (uint8_t i = 0; i < NUMALPHAS; i++) {
-    alpha[i].begin(0x70 + i); // pass in the addresses
-    alpha[i].clear();
-    alpha[i].setBrightness(DAYBRIGHTNESS); // quarter brightness
-    alpha[i].writeDisplay();
-  }
-
-  // display each LED segment - check for bad connections
-  displayAllSegs();
-
-  // display every character,
-  displayAllChars();
-
-  //Serial.println("startup animation complete");
-  delay(500);
-
-  //THIRTY-TWO CHAR CLOCK, ANDY DORO
-  //   THIRTY-TWO CHARACTER CLOCK
-  strcpy(timePhrase, PSTR("THIRTY-TWO CHARACTER WORD CLOCK "));
-
-  for (uint8_t i = 0; i < 100; i++) { // enough cycles to get there
-    morphStrings();
-
-    setChars();
-
-    writeDisplays();
-
-    //Serial.println("write displays");
-    delay(FLIPUPDELAY);
-  }
-
-  delay(2000);
 
   if (! rtc.begin()) {
     Serial.println(F("Couldn't find RTC"));
@@ -242,6 +202,39 @@ void setup() {
     rtc.adjust(standardTime);
   }
 
+
+  // initialize all NUMALPHAS and clear
+  for (uint8_t i = 0; i < NUMALPHAS; i++) {
+    alpha[i].begin(0x70 + i); // pass in the addresses
+    alpha[i].clear();
+    alpha[i].setBrightness(DAYBRIGHTNESS); // quarter brightness
+    alpha[i].writeDisplay();
+  }
+
+  // display each LED segment - check for bad connections
+  displayAllSegs();
+
+  // display every character,
+  displayAllChars();
+
+  //Serial.println("startup animation complete");
+  delay(500);
+
+  strcpy(timePhrase, s_title);
+
+  for (uint8_t i = 0; i < 100; i++) { // enough cycles to get there
+    morphStrings();
+
+    setChars();
+
+    writeDisplays();
+
+    //Serial.println("write displays");
+    delay(FLIPUPDELAY);
+  }
+
+  delay(2000);
+
   // adjust brightness on startup
   DateTime theTime = dst.calculateTime(rtc.now()); // takes into account DST
   adjustBrightness(theTime.hour());
@@ -257,9 +250,7 @@ void loop() {
   // get the time
   DateTime standardTime = rtc.now();
   //DateTime theTime = dst.calculateTime(standardTime); // takes into account DST
-  //DateTime theTime = rtc.now();
   //DateTime theTime = dst.calculateTime(rtc.now()); // takes into account DST
-
 
   // rot encoder
   if (hasEncoder) {
