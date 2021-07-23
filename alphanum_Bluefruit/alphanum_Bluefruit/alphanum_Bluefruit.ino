@@ -27,6 +27,7 @@
 #include <Wire.h>
 #include "Adafruit_LEDBackpack.h"
 #include "Adafruit_GFX.h"
+#include "Alphanum32.h"
 
 #include "Adafruit_BLE.h"
 #include "Adafruit_BluefruitLE_SPI.h"
@@ -38,29 +39,46 @@
 #define NUMCHARS 32
 #define NUMALPHAS 8
 
-#define BRIGHTNESS 64
+#define BRIGHTNESS 15
 
 // how fast the letters flip
 #define FLIPUPDELAY 5
 
 // makes them all clear
-char displaybuffer[NUMCHARS] = {' ', ' ', ' ', ' ',
-                                ' ', ' ', ' ', ' ',
-                                ' ', ' ', ' ', ' ',
-                                ' ', ' ', ' ', ' ',
-                                ' ', ' ', ' ', ' ',
-                                ' ', ' ', ' ', ' ',
-                                ' ', ' ', ' ', ' ',
-                                ' ', ' ', ' ', ' '
-                               };
+char displaybuffer[NUMCHARS + 1] = {' ', ' ', ' ', ' ',
+                                    ' ', ' ', ' ', ' ',
+                                    ' ', ' ', ' ', ' ',
+                                    ' ', ' ', ' ', ' ',
+                                    ' ', ' ', ' ', ' ',
+                                    ' ', ' ', ' ', ' ',
+                                    ' ', ' ', ' ', ' ',
+                                    ' ', ' ', ' ', ' '
+                                   };
 
-String targetString = displaybuffer;
-String tempString = displaybuffer;
+char targetString[NUMCHARS + 1] = {' ', ' ', ' ', ' ',
+                                   ' ', ' ', ' ', ' ',
+                                   ' ', ' ', ' ', ' ',
+                                   ' ', ' ', ' ', ' ',
+                                   ' ', ' ', ' ', ' ',
+                                   ' ', ' ', ' ', ' ',
+                                   ' ', ' ', ' ', ' ',
+                                   ' ', ' ', ' ', ' '
+                                  };
+
+char tempString[NUMCHARS + 1] = {' ', ' ', ' ', ' ',
+                                 ' ', ' ', ' ', ' ',
+                                 ' ', ' ', ' ', ' ',
+                                 ' ', ' ', ' ', ' ',
+                                 ' ', ' ', ' ', ' ',
+                                 ' ', ' ', ' ', ' ',
+                                 ' ', ' ', ' ', ' ',
+                                 ' ', ' ', ' ', ' '
+                                };
 
 // ?? why -1 ??
 int k = -1;
 
-Adafruit_AlphaNum4 alpha[NUMALPHAS];
+Alphanum32 myAlphanum;
 
 /*=========================================================================
     APPLICATION SETTINGS
@@ -170,6 +188,22 @@ void setup(void)
 
   ble.verbose(false);  // debug info is a little annoying after this point!
 
+
+  // initialize display and clear
+  myAlphanum.begin();
+  myAlphanum.clear();
+  myAlphanum.brightness(BRIGHTNESS); // max brightness
+  myAlphanum.write();
+
+  // display each LED segment - check for bad connections
+  myAlphanum.displayAllSegs(20);
+  delay(1000);
+
+  // display all ASCII chars
+  myAlphanum.displayAllChars(20);
+  delay(500);
+
+
   /* Wait for connection */
   while (! ble.isConnected()) {
     delay(500);
@@ -191,27 +225,28 @@ void setup(void)
 
   Serial.println(F("******************************"));
 
-
-  // initialize all NUMALPHAS and clear
-  for (uint8_t i = 0; i < NUMALPHAS; i++) {
-    alpha[i].begin(0x70 + i); // pass in the addresses
-    alpha[i].clear();
-    alpha[i].setBrightness(BRIGHTNESS); // quarter brightness
-    alpha[i].writeDisplay();
-  }
-
-  // display every character,
-  for (uint8_t i = '!'; i <= '~'; i++) {
-    for (uint8_t j = 0; j < NUMCHARS; j++) {
-      uint8_t l = i + j;
-      // create blanks when characters go past '~'
-      if (l > '~') l = ' ';
-      alpha[j / 4].writeDigitAscii(j % 4, l);
+  /*
+    // initialize all NUMALPHAS and clear
+    for (uint8_t i = 0; i < NUMALPHAS; i++) {
+      alpha[i].begin(0x70 + i); // pass in the addresses
+      alpha[i].clear();
+      alpha[i].setBrightness(BRIGHTNESS); // quarter brightness
+      alpha[i].writeDisplay();
     }
 
-    writeDisplays();
-    delay(30);
-  }
+    // display every character,
+    for (uint8_t i = '!'; i <= '~'; i++) {
+      for (uint8_t j = 0; j < NUMCHARS; j++) {
+        uint8_t l = i + j;
+        // create blanks when characters go past '~'
+        if (l > '~') l = ' ';
+        alpha[j / 4].writeDigitAscii(j % 4, l);
+      }
+
+      writeDisplays();
+      delay(30);
+    }
+  */
   //Serial.println("Start typing to display!");
   //Serial.write('ready');
 }
@@ -238,18 +273,22 @@ void loop(void)
 
     // only generate targetString after we hit Enter
     //if (ble.available() <= 0) {
-    targetString = displaybuffer;
+    //targetString = displaybuffer;
+    strcpy(targetString, displaybuffer);
     //Serial.print("target: ");
     Serial.println(targetString);
     //}
   }
 
+  // move to morphStrings() ?
   for (uint8_t j = 0 ; j < NUMCHARS ; j++) {
     if ( !(tempString[j] == targetString[j]) ) { // if the chars doesn't match...
-      tempString.setCharAt(j, tempString[j] + 1); // change it to the next one!
+      //tempString.setCharAt(j, tempString[j] + 1); // change it to the next one!
+      tempString[j] = tempString[j] + 1;
       // rollover
       if (tempString[j] > '~') { // that's the last ASCII char!
-        tempString.setCharAt(j, ' '); // first ASCII char
+        //tempString.setCharAt(j, ' '); // first ASCII char
+        tempString[j] = ' '; // first ASCII char
       }
     }
     //Serial.println(tempString);
@@ -257,10 +296,12 @@ void loop(void)
 
   // set every digit to the buffer
   for (uint8_t i = 0; i < NUMCHARS; i++) {
-    alpha[i / 4].writeDigitAscii(i % 4, tempString[i]);
+    //alpha[i / 4].writeDigitAscii(i % 4, tempString[i]);
+    myAlphanum.writeDigitAscii(i, tempString[i]);
   }
 
-  writeDisplays();
+  //writeDisplays();
+  myAlphanum.write();
   delay(FLIPUPDELAY);
 
   if (ble.available() <= 0) {
@@ -275,6 +316,3 @@ void loop(void)
   }
 
 }
-
-
-
