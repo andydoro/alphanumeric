@@ -1,5 +1,8 @@
 # alphanum_Bluefruit
 
+## Software
+
+Connect via BLE with [Bluefruit LE Connect](https://learn.adafruit.com/bluefruit-le-connect)
 
 
 ## Hardware
