@@ -75,8 +75,10 @@ char tempString[NUMCHARS + 1] = {' ', ' ', ' ', ' ',
                                  ' ', ' ', ' ', ' '
                                 };
 
-// ?? why -1 ??
-int k = -1;
+int k = 0;
+
+// flag to see if msg was sent
+boolean msgSent = false;
 
 Alphanum32 myAlphanum;
 
@@ -225,30 +227,9 @@ void setup(void)
 
   Serial.println(F("******************************"));
 
-  /*
-    // initialize all NUMALPHAS and clear
-    for (uint8_t i = 0; i < NUMALPHAS; i++) {
-      alpha[i].begin(0x70 + i); // pass in the addresses
-      alpha[i].clear();
-      alpha[i].setBrightness(BRIGHTNESS); // quarter brightness
-      alpha[i].writeDisplay();
-    }
-
-    // display every character,
-    for (uint8_t i = '!'; i <= '~'; i++) {
-      for (uint8_t j = 0; j < NUMCHARS; j++) {
-        uint8_t l = i + j;
-        // create blanks when characters go past '~'
-        if (l > '~') l = ' ';
-        alpha[j / 4].writeDigitAscii(j % 4, l);
-      }
-
-      writeDisplays();
-      delay(30);
-    }
-  */
   //Serial.println("Start typing to display!");
   //Serial.write('ready');
+
 }
 
 /**************************************************************************/
@@ -264,30 +245,44 @@ void loop(void)
   if (ble.available() > 0) {
 
     char c = ble.read();
-    Serial.print(c);
+    //Serial.print(c);
 
-    if (! isprint(c)) return; // only printable!
-
+    if (! isPrintable(c)) return; // only printable!
+    
     // build buffer
-    displaybuffer[k] = c;
+    if (k < NUMCHARS) {
+      displaybuffer[k] = c;
+    }
+    k++;
 
-    // only generate targetString after we hit Enter
-    //if (ble.available() <= 0) {
-    //targetString = displaybuffer;
-    strcpy(targetString, displaybuffer);
-    //Serial.print("target: ");
-    Serial.println(targetString);
-    //}
+    msgSent = true;
+  } else {
+    // reset buffer
+    // clear chars that weren't set in last message
+    for (uint8_t i = k; i < NUMCHARS; i++) {
+      displaybuffer[i] = ' ';
+    } 
+
+    if (msgSent) {
+      strcpy(targetString, displaybuffer);
+      //targetString[k] = c;
+      Serial.println(targetString);
+      msgSent = false;
+    }
+
+    //Serial.println("reset!");
+    k = 0;
   }
 
   // move to morphStrings() ?
-  for (uint8_t j = 0 ; j < NUMCHARS ; j++) {
+  for (uint8_t j = 0; j < NUMCHARS; j++) {
     if ( !(tempString[j] == targetString[j]) ) { // if the chars doesn't match...
-      //tempString.setCharAt(j, tempString[j] + 1); // change it to the next one!
       tempString[j] = tempString[j] + 1;
+      //if (tempString[j] == NULL) {
+      //  tempString[j] = ' ';
+      //}
       // rollover
       if (tempString[j] > '~') { // that's the last ASCII char!
-        //tempString.setCharAt(j, ' '); // first ASCII char
         tempString[j] = ' '; // first ASCII char
       }
     }
@@ -296,7 +291,6 @@ void loop(void)
 
   // set every digit to the buffer
   for (uint8_t i = 0; i < NUMCHARS; i++) {
-    //alpha[i / 4].writeDigitAscii(i % 4, tempString[i]);
     myAlphanum.writeDigitAscii(i, tempString[i]);
   }
 
@@ -304,15 +298,6 @@ void loop(void)
   myAlphanum.write();
   delay(FLIPUPDELAY);
 
-  if (ble.available() <= 0) {
-    // reset buffer
-    for (uint8_t i = 0; i < NUMCHARS; i++) {
-      displaybuffer[i] = ' ';
-    }
-    k = -1;
-    //Serial.println("reset!");
-  } else {
-    k++;
-  }
+
 
 }
