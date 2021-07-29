@@ -276,20 +276,7 @@ void loop() {
         //save overflow string?
       } else {
 
-        int blanks = 32 - strlen(theWeather); // catch overflow if message is 32+ ?
-
-        /*
-          // left justified
-            for (int i = 0; i < blanks; i++) {
-              strcat(theWeather, " ");
-              //strcat(" ", timePhrase);
-            };
-        */
-        // right justified
-        memmove(theWeather + blanks, theWeather, strlen(theWeather));
-        for (int i = 0; i < blanks; i++) {
-          theWeather[i] = ' ';
-        }
+        rightJustify();
       }
 
       Serial.println(theWeather);

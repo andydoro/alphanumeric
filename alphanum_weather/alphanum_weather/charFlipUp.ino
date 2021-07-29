@@ -29,3 +29,11 @@ void setChars() {
     myAlphanum.writeDigitAscii(i, tempString[i]);
   }
 }
+
+void rightJustify() {
+  int blanks = 32 - strlen(theWeather);
+  memmove(theWeather + blanks, theWeather, strlen(theWeather));
+  for (int i = 0; i < blanks; i++) {
+    theWeather[i] = ' ';
+  }
+}
