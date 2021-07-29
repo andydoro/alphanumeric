@@ -1,0 +1,4 @@
+
+void setReadyForNewsUpdate() {
+  readyForNewsUpdate = true;
+}
