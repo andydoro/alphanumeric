@@ -1,0 +1,4 @@
+
+void setReadyForWeatherUpdate() {
+  readyForWeatherUpdate = true;
+}
