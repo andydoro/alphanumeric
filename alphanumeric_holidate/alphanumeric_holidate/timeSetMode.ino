@@ -11,9 +11,7 @@ int16_t varRollOver(int16_t var, int16_t minn, int16_t maxx) { // handle time va
 
 void timeSetMode(DateTime standardTime) {
 
-  for (uint8_t i = 0; i < NUMALPHAS; i++) {
-    alpha[i].setBrightness(DAYBRIGHTNESS); // max brightness
-  }
+  myAlphanum.brightness(DAYBRIGHTNESS);
 
   // button clicks
   if (! ss.digitalRead(SS_SWITCH)) {
@@ -25,20 +23,8 @@ void timeSetMode(DateTime standardTime) {
       timeSpanMode = 0;
     }
     // move indicator dot
-    switch (timeSpanMode) {
-      case 0: dotPos = 28;
-        break;
-      case 1: dotPos = 23;
-        break;
-      case 2: dotPos = 18;
-        break;
-      case 3: dotPos = 13;
-        break;
-      case 4: dotPos = 8;
-        break;
-      case 5: dotPos = 0;
-        break;
-    }
+    dotPos = timeSetDotPositions[timeSpanMode];
+    
     timeSetCounter = 0; // reset counter
   }
 
@@ -83,9 +69,6 @@ void timeSetMode(DateTime standardTime) {
         break;
     }
     rtc.adjust(DateTime(stdYear, stdMon, stdDay, stdHour, stdMin, stdSec));
-    //rtc.adjust(standardTime); // write to RTC
-    //theTime = dst.calculateTime(standardTime); // takes into account DST
-    //printTheTime(theTime);
     timeSetCounter = 0; // reset counter
     encoder_position = new_position;      // and save for next round
   }
@@ -134,7 +117,7 @@ void timeSetMode(DateTime standardTime) {
   Serial.println(F(tempString));
 
   setChars();
-  writeDisplays();
+  myAlphanum.write();
 
   timeSetCounter++;
   if (timeSetCounter > TIMESETCOUNTERLIMIT) {

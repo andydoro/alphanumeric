@@ -311,8 +311,6 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
       break;
     case 9: // September
       switch (theDay) {
-        case 9:  strcpy(timePhrase, PSTR("    HAPPY CIRCUIT PYTHON DAY    "));
-          break;
         case 11: strcpy(timePhrase, PSTR("NEVER FORGET                9/11"));
           break;
         case 17: strcpy(timePhrase, PSTR("     HAPPY CONSTITUTION DAY     "));

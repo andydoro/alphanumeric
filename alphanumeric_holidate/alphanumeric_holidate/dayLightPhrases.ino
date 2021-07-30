@@ -1,4 +1,3 @@
-
 void dayLightPhrases(DateTime theTime) {
 
   // do we need to adjust offset for DST?
@@ -90,9 +89,6 @@ void dayLightPhrases(DateTime theTime) {
     strcat(sunrisePhrase, SR_hour_str);
     // get string length here
     SR_dotPos = strlen(sunrisePhrase) - 1;
-    //Serial.print("dot Pos:");
-    //Serial.println(SR_dotPos);
-    //strcat(sunrisePhrase, s_colon); // ":" looks weird
     strcat(sunrisePhrase, SR_min_str);
     strcat(sunrisePhrase, s_am);
   } else if ((theHour == sunriseHour) && (theMin == sunriseMin)) {
@@ -103,9 +99,6 @@ void dayLightPhrases(DateTime theTime) {
     strcat(sunrisePhrase, SR_hour_str);
     // get string length here
     SR_dotPos = strlen(sunrisePhrase) - 1;
-    //Serial.print("dot Pos:");
-    //Serial.println(SR_dotPos);
-    //strcat(sunrisePhrase, s_colon); // ":" looks weird
     strcat(sunrisePhrase, SR_min_str);
     strcat(sunrisePhrase, s_am);
   }
@@ -126,7 +119,6 @@ void dayLightPhrases(DateTime theTime) {
 
     // get dotPos
     SS_dotPos = SS_DOTPOS;
-    //strcat(sunsetPhrase, s_colon); // ":" looks weird
     strcat(sunsetPhrase, SS_min_str);
     strcat(sunsetPhrase, s_pm);
   } else if ((theHour == sunsetHour) && (theMin == sunsetMin)) {
@@ -135,7 +127,6 @@ void dayLightPhrases(DateTime theTime) {
   } else {
     strcat(sunsetPhrase, s_was_at);
     strcat(sunsetPhrase, SS_hour_str);
-    //strcat(sunsetPhrase, s_colon); // ":" looks weird
     // get dotPos
     SS_dotPos = SS_DOTPOS;
     strcat(sunsetPhrase, SS_min_str);

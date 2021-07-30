@@ -11,45 +11,19 @@ void morphStrings() {
     //Serial.println(tempString);
   }
 }
-
 void setChars() {
   // set every digit to the buffer
+  // need to use special undocumented "true" argument to display dots
+
   for (uint8_t i = 0; i < NUMCHARS; i++) {
     if (i == dotPos) {
-      alpha[i / 4].writeDigitAscii(i % 4, tempString[i], true); //write the '.' along with the character
+      myAlphanum.writeDigitAscii(i, tempString[i], true);
     } else {
-      alpha[i / 4].writeDigitAscii(i % 4, tempString[i]);
+      myAlphanum.writeDigitAscii(i, tempString[i]);
     }
   }
 }
 
-void writeDisplays() {
-  for (uint8_t i = 0; i < NUMALPHAS; i++) {
-    alpha[i].writeDisplay();
-  }
-}
-
-void displayAllSegs() {
-  for (uint8_t i = 0; i < NUMCHARS; i++) {
-    alpha[i / 4].writeDigitRaw(i % 4, 0x7FFF);
-    writeDisplays();
-    delay(20);
-  }
-  delay(2000);
-}
-
-void displayAllChars() {
-  for (uint8_t i = '!'; i <= '~'; i++) {
-    for (uint8_t j = 0; j < NUMCHARS; j++) {
-      uint8_t l = i + j;
-      // create blanks when characters go past '~'
-      if (l >= '~') l = ' ';
-      alpha[j / 4].writeDigitAscii(j % 4, l);
-    }
-    writeDisplays();
-    delay(20);
-  }
-}
 
 // print time to serial
 void printTheTime(DateTime theTimeP) {

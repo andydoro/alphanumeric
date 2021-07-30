@@ -121,8 +121,6 @@ void hourPhrase(byte h) {
 
 void genTimePhrase(byte theHour, byte theMin) {
 
-  //dotPos = -1;
-
   // generate string based on the time
   strcpy(timePhrase, s_itis); // "IT IS "
 

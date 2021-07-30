@@ -5,6 +5,7 @@
 #include <Wire.h>
 #include "Adafruit_LEDBackpack.h"
 #include "Adafruit_GFX.h"
+#include "Alphanum32.h"
 
 // clock libs
 #include "RTClib.h"
@@ -60,13 +61,11 @@ const char s_title[] PROGMEM = "THIRTY-TWO CHARACTER WORD CLOCK ";
 #define LONGITUDE -73.9899
 #define GMTOFFSET -5
 
-#define NUMCHARS 32
-#define NUMALPHAS 8
-
-//#define BRIGHTNESS 64
+const byte NUMCHARS = 32;
+const byte NUMALPHAS = 8;
 
 // how fast the letters flip
-#define FLIPUPDELAY 15
+const byte FLIPUPDELAY = 15;
 
 // makes them all clear
 char tempString[NUMCHARS + 1] = {' ', ' ', ' ', ' ',
@@ -83,7 +82,7 @@ char timePhrase[NUMCHARS + 1];
 char sunrisePhrase[NUMCHARS + 1];
 char sunsetPhrase[NUMCHARS + 1];
 
-Adafruit_AlphaNum4 alpha[NUMALPHAS];
+Alphanum32 myAlphanum;
 
 RTC_DS3231 rtc; // clock object
 DST_RTC dst; // dst object
@@ -94,12 +93,12 @@ const char rulesDST[] = "US"; // US DST rules
 
 // brightness based on time of day
 // 0-15
-#define DAYBRIGHTNESS 15
-#define NIGHTBRIGHTNESS 5
+const byte DAYBRIGHTNESS = 15;
+const byte NIGHTBRIGHTNESS = 5;
 
 // cutoff times for day / night brightness. feel free to modify.
-#define MORNINGCUTOFF 7  // when does daybrightness begin?   7am
-#define NIGHTCUTOFF 22 // when does nightbrightness begin? 10pm
+const byte MORNINGCUTOFF = 7;  // when does daybrightness begin?   7am
+const byte NIGHTCUTOFF = 22; // when does nightbrightness begin? 10pm
 
 boolean firstTime = true; // save time recalculating sunrise/sunset
 
@@ -108,14 +107,13 @@ int dotPos = -1; // location for dot
 int SR_dotPos = -1;
 int SS_dotPos = -1;
 
-const byte SS_DOTPOS = 26; // sunset dot doesn't changeh
+const byte SS_DOTPOS = 26; // sunset dot doesn't change bc it's right justified
 
 // rot encode constants
 #define SS_SWITCH 24
 //#define SS_NEOPIX        6
 
 #define SEESAW_ADDR 0x36
-
 
 boolean hasEncoder = true;
 
@@ -134,11 +132,13 @@ const int TIMESETCOUNTERLIMIT = 500;
 
 const int SWITCH_DELAY = 50;
 
+// lookup table for Time Set Mode dot positions
+const byte timeSetDotPositions[6] = {28, 23, 18, 13, 8, 0};
 
 void setup() {
   // put your setup code here, to run once:
 
-  delay(1000);
+  delay(500);
   Serial.begin(115200);
 
   // check for rot encoder
@@ -184,8 +184,6 @@ void setup() {
 
   if (rtc.lostPower()) {
     Serial.println("RTC lost power, lets set the time!");
-    // following line sets the RTC to the date & time this sketch was compiled
-    //rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
     // When time needs to be re-set on a previously configured device, the
     // following line sets the RTC to the date & time this sketch was compiled
     rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
@@ -202,34 +200,31 @@ void setup() {
     rtc.adjust(standardTime);
   }
 
-
   // initialize all NUMALPHAS and clear
-  for (uint8_t i = 0; i < NUMALPHAS; i++) {
-    alpha[i].begin(0x70 + i); // pass in the addresses
-    alpha[i].clear();
-    alpha[i].setBrightness(DAYBRIGHTNESS); // quarter brightness
-    alpha[i].writeDisplay();
-  }
+  myAlphanum.begin();
+  myAlphanum.clear();
+  myAlphanum.brightness(DAYBRIGHTNESS); // max brightness
+  myAlphanum.write();
 
   // display each LED segment - check for bad connections
-  displayAllSegs();
+  myAlphanum.displayAllSegs(20);
+  delay(1000);
 
-  // display every character,
-  displayAllChars();
+  // display all ASCII chars
+  myAlphanum.displayAllChars(20);
+  delay(500);
 
   //Serial.println("startup animation complete");
   delay(500);
 
   strcpy(timePhrase, s_title);
-
   for (uint8_t i = 0; i < 100; i++) { // enough cycles to get there
     morphStrings();
 
     setChars();
 
-    writeDisplays();
+    myAlphanum.write();
 
-    //Serial.println("write displays");
     delay(FLIPUPDELAY);
   }
 
@@ -250,7 +245,6 @@ void loop() {
   // get the time
   DateTime standardTime = rtc.now();
   //DateTime theTime = dst.calculateTime(standardTime); // takes into account DST
-  //DateTime theTime = dst.calculateTime(rtc.now()); // takes into account DST
 
   // rot encoder
   if (hasEncoder) {
@@ -273,64 +267,65 @@ void loop() {
 
     byte theSec = theTime.second();
     byte tenSec = theSec / 10; // use to figure out which mode to enter
-    //byte theHour = theTime.hour();
 
-    // sunrise sunset
-    // calculate once because it takes too long
     byte theHour = theTime.hour();
     byte theMin = theTime.minute();
+    byte theDay = theTime.day();
 
     dotPos = -1; // default don't show dotPos
 
-    if (tenSec == 1) { // :10 - :19
+    switch (tenSec) { // which time mode to display
+      case 1: // :10 - :19
 
-      if (theSec < 15) { // :10 - :14
-        // day of week
-        dotwPhrase(theTime.dayOfTheWeek());
+        if (theSec < 15) { // :10 - :14
+          // day of week
+          dotwPhrase(theTime.dayOfTheWeek());
 
-        // left justify
-        leftJustify();
+          // left justify
+          leftJustify();
 
-        // adjust brightness based on hour
-        if (theSec == 12) { // only adjust once per minute...
-          delay(1); // help with crashes?
-          adjustBrightness(theHour);
-
-          // get ready to calculate sunrise / sunset again
-          firstTime = true;
-
-          // only calculate once per minute, otherwise it's too slow
-          if (firstTime == true) {
+          if (theSec == 12 && firstTime) { // only adjust once per minute...
+            // adjust brightness based on hour
+            adjustBrightness(theHour);
+            // calculate dayLightPhrases
+            // we can probably do this more efficiently, saving sunrise, sunset once per day and then comparing to current time
             dayLightPhrases(theTime);
           }
+        } else { // :15 - :19
+          // date
+          datePhrase(theTime.month(), theDay);
+          rightJustify();
         }
-      } else { // :15 - :19
-        // date
-        datePhrase(theTime.month(), theTime.day());
-        rightJustify();
-      }
-    } else if (tenSec == 2) { // :20 - :29
-      // special dates
-      //byte theMon = theTime.month();
-      byte theDay = theTime.day();
-      // check for friday the 13th
-      if (theDay == 13 && theTime.dayOfTheWeek() == 5) {
-        // it's Friday the 13th!
-        strcpy(timePhrase, PSTR("YIKES IT'S FRIDAY THE THIRTEENTH"));
-      } else {
-        holidate(theTime.month(), theDay, theHour, theMin);
-      }
-    } else if (tenSec == 3) { // :30 - :39
-      strcpy(timePhrase, sunrisePhrase);
-      dotPos = SR_dotPos;
+        break;
 
-    } else if (tenSec == 4) { // :40 - :49
-      strcpy(timePhrase, sunsetPhrase);
-      dotPos = SS_dotPos;
+      case 2: // :20 - :29
+        // special dates
+        // check for friday the 13th
+        if (theDay == 13 && theTime.dayOfTheWeek() == 5) {
+          // it's Friday the 13th!
+          strcpy(timePhrase, PSTR("YIKES IT'S FRIDAY THE THIRTEENTH"));
+        } else {
+          holidate(theTime.month(), theDay, theHour, theMin);
+        }
+        break;
 
-    } else { // :50 - :09
-      // the time in words
-      genTimePhrase(theHour, theMin);
+      case 3:  // :30 - :39
+        strcpy(timePhrase, sunrisePhrase);
+        dotPos = SR_dotPos;
+        break;
+
+      case 4: // :40 - :49
+        strcpy(timePhrase, sunsetPhrase);
+        dotPos = SS_dotPos;
+        break;
+
+      default: // :50 - :09
+        // get ready to calculate sunrise / sunset again
+        firstTime = true;
+
+        // the time in words
+        genTimePhrase(theHour, theMin);
+        break;
     }
 
     printTheTime(theTime);
@@ -341,9 +336,8 @@ void loop() {
 
     setChars();
 
-    writeDisplays();
+    myAlphanum.write();
 
     delay(FLIPUPDELAY);
   }
-
 }
