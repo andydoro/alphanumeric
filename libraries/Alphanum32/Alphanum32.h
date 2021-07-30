@@ -16,7 +16,7 @@ public:
     void clear();
     void brightness(uint8_t b);
     void write();
-    void writeDigitAscii(uint8_t i, char c);
+    void writeDigitAscii(uint8_t i, uint8_t c, bool dot = false);
     void displayAllSegs(uint8_t d);
     void displayAllChars(uint8_t d);
 

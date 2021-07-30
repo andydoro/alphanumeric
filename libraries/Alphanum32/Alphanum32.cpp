@@ -42,9 +42,13 @@ void Alphanum32::write()
   }
 }
 
-void Alphanum32::writeDigitAscii(uint8_t i, char c)
+void Alphanum32::writeDigitAscii(uint8_t i, uint8_t c, bool d)
 {
-  alpha[i / 4].writeDigitAscii((i % 4), c);
+  if (d) {
+	  alpha[i / 4].writeDigitAscii((i % 4), c, d);
+  } else {
+  	alpha[i / 4].writeDigitAscii((i % 4), c);
+  }
 }
 
 void Alphanum32::displayAllSegs(uint8_t d)
