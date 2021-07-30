@@ -2,7 +2,7 @@
 
 Countdown to target date. Can display 3 or 2 digit days (up to 999 days)
 
-XXX DAYS XX HOURS XX MINS XX SEC
+XXX DAYS XX HOURS XX MINS XX SEC  
 XX DAYS XX HOURS XX MINS XX SECS
 
 
