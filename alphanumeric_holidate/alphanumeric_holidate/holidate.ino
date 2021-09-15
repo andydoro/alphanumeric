@@ -311,7 +311,11 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
       break;
     case 9: // September
       switch (theDay) {
+        case 9: strcpy(timePhrase, PSTR("   ATTICA ATTICA ATTICA ATTICA   ")); // Attica uprising
+          break;
         case 11: strcpy(timePhrase, PSTR("NEVER FORGET                9/11"));
+          break;
+        case 16: strcpy(timePhrase, PSTR("VIVA LA INDEPENDENCIA DE MEXICO ")); // Mexican Independence Day
           break;
         case 17: strcpy(timePhrase, PSTR("     HAPPY CONSTITUTION DAY     "));
           break;
@@ -421,8 +425,6 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
         case 13: strcpy(timePhrase, PSTR(" NANKING MASSACRE MEMORIAL DAY  "));
           break;
         case 14: strcpy(timePhrase, PSTR("        HAPPY MONKEY DAY        "));
-          break;
-        case 15: strcpy(timePhrase, PSTR("      HAPPY BIRTHDAY LULU       "));
           break;
         case 17: strcpy(timePhrase, PSTR("        IO SATURNALIA           "));
           break;
