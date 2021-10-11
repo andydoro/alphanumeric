@@ -344,7 +344,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 10: strcpy(timePhrase, PSTR("      HAPPY DOUBLE TEN DAY      ")); // https://en.wikipedia.org/wiki/National_Day_of_the_Republic_of_China
           break;
-        case 11: strcpy(timePhrase, PSTR(" IT IS NATIONAL COMING OUT DAY  "));
+        case 11: strcpy(timePhrase, PSTR(" HAPPY INDIGENOUS PEOPLES' DAY  "));
           break;
         case 12: strcpy(timePhrase, PSTR("      IT IS COLUMBUS DAY        "));
           break;
