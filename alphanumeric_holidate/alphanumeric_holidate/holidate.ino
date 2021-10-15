@@ -21,11 +21,17 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 2:  strcpy(timePhrase, PSTR("        HAPPY NYINLONG          "));
           break;
+        case 3:  strcpy(timePhrase, PSTR("  HAPPY BIRTHDAY ANNA MAY WONG  "));
+          break;
+        case 4:  strcpy(timePhrase, PSTR("HAPPY BIRTHDAY SIR ISAAC NEWTON "));
+          break;
         case 5:  strcpy(timePhrase, PSTR("       HAPPY EPIPHANY EVE       "));
           break;
         case 6:  strcpy(timePhrase, PSTR("       FELIZ DIA DE REYES       "));
           break;
         case 7:  strcpy(timePhrase, PSTR("        KALA CHRISTOUGENA       "));
+          break;
+        case 8:  strcpy(timePhrase, PSTR("  HAPPY BIRTHDAY ELVIS PRESLEY  "));
           break;
         case 13: strcpy(timePhrase, PSTR("    HAPPY OLD NEW YEAR'S EVE    "));
           break;
@@ -138,7 +144,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 6:  strcpy(timePhrase, PSTR("         HAPPY TARTAN DAY       ")); // New Beer's Eve
           break;
-        case 7:  strcpy(timePhrase, PSTR("     HAPPY NATIONAL BEER DAY    "));
+        case 7:  strcpy(timePhrase, PSTR(" HAPPY BIRTHDAY BILLIE HOLIDAY  "));
           break;
         case 8:  strcpy(timePhrase, PSTR("       HAPPY HANAMATSURI        ")); // https://en.wikipedia.org/wiki/International_Romani_Day
           break;
@@ -352,7 +358,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 14: strcpy(timePhrase, PSTR("    HAPPY WORLD STANDARDS DAY   "));
           break;
-        case 15: strcpy(timePhrase, PSTR(" FRIEDRICH NIETZSCHE'S BIRTHDAY "));
+        case 15: strcpy(timePhrase, PSTR(" FRIEDRICH NIETZSCHE'S BIRTHDAY ")); // also Fela Anikulapo Kuti's birthday
           break;
         case 21: strcpy(timePhrase, PSTR("        IT IS APPLE DAY         "));
           break;
@@ -398,6 +404,8 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
         case 15: strcpy(timePhrase, PSTR("  DAY OF THE IMPRISONED WRITER  "));
           break;
         case 20: strcpy(timePhrase, PSTR(" TRANSGENDER DAY OF REMEMBRANCE "));
+          break;
+        case 21: strcpy(timePhrase, PSTR("      HAPPY BIRTHDAY BJORK      "));
           break;
         case 24: strcpy(timePhrase, PSTR("      HAPPY EVOLUTION DAY       "));
           break;
