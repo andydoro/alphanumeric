@@ -407,6 +407,8 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 21: strcpy(timePhrase, PSTR("      HAPPY BIRTHDAY BJORK      "));
           break;
+        case 22: strcpy(timePhrase, PSTR("JFK WAS ASSASSINATED ON THIS DAY"));
+          break;
         case 24: strcpy(timePhrase, PSTR("      HAPPY EVOLUTION DAY       "));
           break;
         case 28: strcpy(timePhrase, PSTR("IT IS THE START OF NATIVITY FAST"));
