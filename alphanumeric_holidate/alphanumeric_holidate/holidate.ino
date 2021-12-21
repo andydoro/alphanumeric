@@ -440,7 +440,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 20: strcpy(timePhrase, PSTR("       HAPPY FOREFEAST          "));
           break;
-        case 21: strcpy(timePhrase, PSTR("     MERRY WINTER SOlSTICE      "));
+        case 21: strcpy(timePhrase, PSTR("     MERRY WINTER SOLSTICE      "));
           break;
         case 23: strcpy(timePhrase, PSTR("IT'S FESTIVUS FOR THE REST OF US"));
           break;
