@@ -82,7 +82,7 @@ byte digitSkip = 27; // assume 3 digits
 // this date is in Standard Time
 // verify calculations here:
 // https://www.timeanddate.com/date/durationresult.html
-const unsigned long countdownOver = 1640995200;
+const unsigned long countdownOver = 1672531200;
 
 // Do you live in a country or territory that observes Daylight Saving Time?
 // https://en.wikipedia.org/wiki/Daylight_saving_time_by_country

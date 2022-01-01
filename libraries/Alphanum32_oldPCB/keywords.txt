@@ -1,0 +1,17 @@
+#######################################
+# Syntax Coloring Map For alphanum32
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Alphanum32			KEYWORD1
+
+begin				KEYWORD2
+clear				KEYWORD2
+brightness			KEYWORD2
+write				KEYWORD2
+writeDigitAscii 	KEYWORD2
+displayAllSegs		KEYWORD2
+displayAllChars		KEYWORD2

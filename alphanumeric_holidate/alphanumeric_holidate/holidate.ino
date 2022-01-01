@@ -35,13 +35,17 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 13: strcpy(timePhrase, PSTR("    HAPPY OLD NEW YEAR'S EVE    "));
           break;
-        case 14: strcpy(timePhrase, PSTR("      HAPPY OLD NEW YEAR        ")); // orthodox new year
+        case 14: strcpy(timePhrase, PSTR("      HAPPY OLD NEW YEAR        ")); // orthodox new year https://en.wikipedia.org/wiki/Old_New_Year
           break;
-        case 15: strcpy(timePhrase, PSTR("MARTIN LUTHER KING JR'S BIRTHDAY"));
+        case 15: strcpy(timePhrase, PSTR("   IT IS NATIONAL NOTHING DAY   "));
+          break;
+        case 16: strcpy(timePhrase, PSTR("MARTIN LUTHER KING JR'S BIRTHDAY"));
           break;
         case 19: strcpy(timePhrase, PSTR("          HAPPY TIMKAT          ")); //https://en.wikipedia.org/wiki/Timkat
           break;
         case 20: strcpy(timePhrase, PSTR("     IT IS INAUGURATION DAY     ")); // check year? (y % 4 == 1)but we gotta pass that through...
+          break;
+        case 24: strcpy(timePhrase, PSTR("JOLLY BELLY LAUGH DAY   HA HA HA")); 
           break;
         case 25: strcpy(timePhrase, PSTR("SLAINTE MHATH   IT'S BURNS NIGHT")); // Sláinte Mhath - Oidhche Bhlas Burns
           break;
