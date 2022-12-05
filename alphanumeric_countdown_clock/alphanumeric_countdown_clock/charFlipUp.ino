@@ -12,10 +12,10 @@ void morphStrings() {
   }
 }
 
-void morphStringsSkip() {
+void morphStringsSkip(byte ds) {
 
   for (uint8_t j = 0 ; j < NUMCHARS; j++) {
-    if (j == digitSkip) { // skipping
+    if (j == ds) { // skipping
       tempString[j] = timePhrase[j]; // just set it, no "morph"
     }
     else {

@@ -1,5 +1,6 @@
 
-// make more flexible, 4 digit days or years?
+// made more flexible, 4 digit days 
+// to do: add years?
 
 
 #include <Wire.h>
@@ -14,22 +15,25 @@
 // const char strings
 const char s_days[] PROGMEM = " DAYS ";
 const char s_hours[] PROGMEM = " HOURS ";
+const char s_hrs[] PROGMEM = " HRS ";
 const char s_mins[] PROGMEM = " MINS ";
 const char s_secs[] PROGMEM = " SECS";
 
 const char s_day[] PROGMEM = " DAY  ";
 const char s_hour[] PROGMEM = " HOUR  ";
+const char s_hr[] PROGMEM = " HR  ";
 const char s_min[] PROGMEM = " MIN  ";
 const char s_sec[] PROGMEM = " SEC ";
 
 
 const char s_day_blank[] PROGMEM = "        ";
 const char s_hour_blank[] PROGMEM = "                ";
+const char s_hr_blank[] PROGMEM = "              ";
 const char s_min_blank[] PROGMEM = "                        ";
 
 const char s_intro[] PROGMEM = "        COUNTDOWN CLOCK         ";
 
-const char countdownComplete[] PROGMEM = "        HAPPY NEW YEAR          ";
+const char countdownComplete[] PROGMEM = "         TIME IS UP             ";
 
 //const byte NUMCHARS = 32;
 #define NUMCHARS 32
@@ -72,17 +76,18 @@ const char rulesDST[] = "US"; // US DST rules
 #define NIGHTCUTOFF 22 // when does nightbrightness begin? 10pm
 
 
-byte digitSkip = 27; // assume 3 digits
+//byte digitSkip = 27; // assume 3 digits
 
 // unix target date
 // countdown until:
-// January 20, 2021, 12:00:00 pm, -5 GMT
+// July 1, 2047, 12:00:00 am GMT
 // using: https://www.epochconverter.com/
 //
 // this date is in Standard Time
 // verify calculations here:
 // https://www.timeanddate.com/date/durationresult.html
-const unsigned long countdownOver = 1672531200;
+const unsigned long countdownOver = 2445552000000;
+// July 1, 2047
 
 // Do you live in a country or territory that observes Daylight Saving Time?
 // https://en.wikipedia.org/wiki/Daylight_saving_time_by_country
@@ -187,7 +192,7 @@ void loop() {
 
     int daysLeft, hoursLeft, minutesLeft, leftoverSecondsLeft; // create vars
 
-    int numDayDigits = 3; // how many digits do we want for days?
+    int numDayDigits = 4; // how many digits do we want for days?
     // changed dynamically based on number of days left
 
     // calculate days, hours, minutes left
@@ -209,7 +214,10 @@ void loop() {
 
     // figure out days left, which affects our display
     // what's our max? lets do 3 or else "SEC" word looks weird
-    if (daysLeft > 99) {
+    if (daysLeft > 999) {
+      numDayDigits = 4;
+      // set HOURS to HRS
+    } else if (daysLeft > 99) {
       numDayDigits = 3;
     } else {
       numDayDigits = 2;
@@ -219,7 +227,12 @@ void loop() {
 
     // define which seconds digit to skip morph
     // can make more dynamic
-    digitSkip = 24 + numDayDigits;
+    byte digitSkip = 26; // assume 2 or 4 day digits
+    if (numDayDigits == 3) {
+      digitSkip = 27;
+    } else {
+      digitSkip = 26;
+    }
 
     //Serial.println(digitSkip);
 
@@ -231,7 +244,9 @@ void loop() {
 
     // generate string based on the time
     //if (numDayDigits == 3) {
-    if (numDayDigits > 2) {
+    if (numDayDigits == 4) {
+      sprintf(day_str, "%4d", daysLeft); // convert int to str
+    } else if (numDayDigits == 3) {
       sprintf(day_str, "%3d", daysLeft); // convert int to str
     } else {
       sprintf(day_str, "%2d", daysLeft); // convert int to str
@@ -250,14 +265,26 @@ void loop() {
       strcat(timePhrase, s_days); // " days"
     }
 
-    if (daysLeft == 0 && hoursLeft == 0) {
-      strcpy(timePhrase, s_hour_blank); // blank, no number
-    } else if (hoursLeft == 1) {
-      strcat(timePhrase, hour_str);
-      strcat(timePhrase, s_hour); // " hour "
+    if (numDayDigits == 4) {
+      if (daysLeft == 0 && hoursLeft == 0) {
+        strcpy(timePhrase, s_hr_blank); // blank, no number
+      } else if (hoursLeft == 1) {
+        strcat(timePhrase, hour_str);
+        strcat(timePhrase, s_hr); // " hr "
+      } else {
+        strcat(timePhrase, hour_str);
+        strcat(timePhrase, s_hrs); // " hrs "
+      }
     } else {
-      strcat(timePhrase, hour_str);
-      strcat(timePhrase, s_hours); // " hours "
+      if (daysLeft == 0 && hoursLeft == 0) {
+        strcpy(timePhrase, s_hour_blank); // blank, no number
+      } else if (hoursLeft == 1) {
+        strcat(timePhrase, hour_str);
+        strcat(timePhrase, s_hour); // " hour "
+      } else {
+        strcat(timePhrase, hour_str);
+        strcat(timePhrase, s_hours); // " hours "
+      }
     }
 
     if (daysLeft == 0 && hoursLeft == 0 && minutesLeft == 0) {
@@ -291,7 +318,7 @@ void loop() {
 
     Serial.println(F(timePhrase));
 
-    morphStringsSkip();
+    morphStringsSkip(digitSkip);
 
   } else { // less than zero
 
