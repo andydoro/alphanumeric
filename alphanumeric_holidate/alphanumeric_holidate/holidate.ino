@@ -45,7 +45,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 20: strcpy(timePhrase, PSTR("     IT IS INAUGURATION DAY     ")); // check year? (y % 4 == 1)but we gotta pass that through...
           break;
-        case 24: strcpy(timePhrase, PSTR("JOLLY BELLY LAUGH DAY   HA HA HA")); 
+        case 24: strcpy(timePhrase, PSTR("JOLLY BELLY LAUGH DAY   HA HA HA"));
           break;
         case 25: strcpy(timePhrase, PSTR("SLAINTE MHATH   IT'S BURNS NIGHT")); // Sláinte Mhath - Oidhche Bhlas Burns
           break;
@@ -142,7 +142,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
       break;
     case 4: // April
       switch (theDay) {
-        case 1:  strcpy(timePhrase, PSTR("BE CAREFUL IT'S APRIL FOOLS DAY "));
+        case 1:  strcpy(timePhrase, PSTR("BE CAREFUL IT'S APRIL FOOLS DAY ")); // also Assyrian New Year Kha b'Nissan
           break;
         case 5:  strcpy(timePhrase, PSTR("     HAPPY COLD FOOD FESTIVAL   "));
           break;
@@ -154,10 +154,10 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 12: strcpy(timePhrase, PSTR("       HAPPY YURI'S NIGHT       "));
           break;
-        case 13: strcpy(timePhrase, PSTR("IT'S THOMAS JEFFERSON'S BIRTHDAY"));
+        case 13: strcpy(timePhrase, PSTR("IT'S THOMAS JEFFERSON'S BIRTHDAY")); // also https://en.wikipedia.org/wiki/Vaisakhi
           break;
         case 14: strcpy(timePhrase, PSTR("EAT JAJANGMYEON   IT'S BLACK DAY")); // https://en.wikipedia.org/wiki/Black_Day_(South_Korea)
-          break;                                                               // https://en.wikipedia.org/wiki/Vaisakhi
+          break;                                                               // also https://en.wikipedia.org/wiki/Puthandu Tamil New Year
         case 15: strcpy(timePhrase, PSTR("          HAPPY TAX DAY         "));
           break;
         case 19: strcpy(timePhrase, PSTR("        HAPPY BICYCLE DAY       ")); // https://en.wikipedia.org/wiki/History_of_lysergic_acid_diethylamide#%22Bicycle_Day%22
@@ -321,9 +321,9 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
       break;
     case 9: // September
       switch (theDay) {
-        case 9: strcpy(timePhrase, PSTR("   ATTICA ATTICA ATTICA ATTICA   ")); // Attica uprising
+        case 9:  strcpy(timePhrase, PSTR("   ATTICA ATTICA ATTICA ATTICA  ")); // Attica uprising
           break;
-        case 11: strcpy(timePhrase, PSTR("NEVER FORGET                9/11"));
+        case 11: strcpy(timePhrase, PSTR("NEVER FORGET                9/11")); // also Enkutatash, Ethiopian/Eritrean New Year
           break;
         case 16: strcpy(timePhrase, PSTR("VIVA LA INDEPENDENCIA DE MEXICO ")); // Mexican Independence Day
           break;
@@ -374,7 +374,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 26: strcpy(timePhrase, PSTR("  IT IS INTERSEX AWARENESS DAY  "));
           break;
-        case 30: strcpy(timePhrase, PSTR("      IT IS DEVIL'S NIGHT       "));
+        case 30: strcpy(timePhrase, PSTR("      IT IS DEVIL'S NIGHT       ")); // also Aboriginal Murador new year
           break;
         case 31: strcpy(timePhrase, PSTR("        HAPPY HALLOWEEN         "));
           break;
