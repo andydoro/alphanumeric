@@ -234,8 +234,6 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 5:  strcpy(timePhrase, PSTR("       IT IS NAKSA DAY          "));
           break;
-        case 6:  strcpy(timePhrase, PSTR("   THIS DAY IN 1944 WAS D-DAY   "));
-          break;
         case 10: strcpy(timePhrase, PSTR("     FELIZ DIA DE PORTUGAL      "));
           break;
         case 11: strcpy(timePhrase, PSTR("  HAPPY KING KAMEHAMEHA I DAY   "));
