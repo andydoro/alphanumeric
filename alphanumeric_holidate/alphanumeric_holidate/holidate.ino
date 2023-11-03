@@ -82,7 +82,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 19: strcpy(timePhrase, PSTR("DAY OF REMEMBRANCE EX ORDER 9066"));
           break;
-        case 21: strcpy(timePhrase, PSTR("        HAPPY FERALIA           "));
+        case 21: strcpy(timePhrase, PSTR("        HAPPY FERALIA           ")); // also Nina Simone's birthday
           break;
         case 22: strcpy(timePhrase, PSTR(" GEORGE WASHINGTON'S BIRTHDAY   "));
           break;
@@ -211,7 +211,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 21: strcpy(timePhrase, PSTR("  DIA DE LA AFROCOLOMBIANIDAD   "));
           break;
-        case 22: strcpy(timePhrase, PSTR("       IT IS AL-QUDS DAY        ")); // also Harvey Milk Day
+        case 22: strcpy(timePhrase, PSTR("     IT IS HARVEY MILK DAY      ")); // also Al-Quds Day
           break;
         case 25: strcpy(timePhrase, PSTR("        HAPPY AFRICA DAY        "));
           break;
@@ -376,6 +376,8 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 26: strcpy(timePhrase, PSTR("  IT IS INTERSEX AWARENESS DAY  "));
           break;
+        case 28: strcpy(timePhrase, PSTR(" IT IS NATIONAL IMMIGRANTS DAY  "));
+          break;
         case 30: strcpy(timePhrase, PSTR("      IT IS DEVIL'S NIGHT       ")); // also Aboriginal Murador new year
           break;
         case 31: strcpy(timePhrase, PSTR("        HAPPY HALLOWEEN         "));
@@ -387,9 +389,11 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
       break;
     case 11: // November
       switch (theDay) {
-        case 1:  strcpy(timePhrase, PSTR("    FELIZ DIA DE LOS MUERTOS    "));
+        case 1:  strcpy(timePhrase, PSTR("      FELIZ DIA DE MUERTOS      "));
           break;
         case 2:  strcpy(timePhrase, PSTR("      IT IS ALL SOULS' DAY      "));
+          break;
+        case 4:  strcpy(timePhrase, PSTR("IT IS YITZHAK RABIN MEMORIAL DAY"));
           break;
         case 5:  strcpy(timePhrase, PSTR("REMEMBER REMEMBER THE 5TH OF NOV")); // Guy Fawkes Day
           break;
@@ -416,6 +420,8 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
         case 22: strcpy(timePhrase, PSTR("JFK WAS ASSASSINATED ON THIS DAY"));
           break;
         case 24: strcpy(timePhrase, PSTR("      HAPPY EVOLUTION DAY       "));
+          break;
+        case 27: strcpy(timePhrase, PSTR("    HAPPY BIRTHDAY BRUCE LEE    "));
           break;
         case 28: strcpy(timePhrase, PSTR("IT IS THE START OF NATIVITY FAST"));
           break;
