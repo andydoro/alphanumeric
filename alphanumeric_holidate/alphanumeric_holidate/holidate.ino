@@ -18,7 +18,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
     case 1: // January
       switch (theDay) {
         case 1:  strcpy(timePhrase, PSTR("        HAPPY NEW YEAR          "));
-          break; ni
+          break;
         case 2:  strcpy(timePhrase, PSTR("        HAPPY NYINLONG          "));
           break;
         case 3:  strcpy(timePhrase, PSTR("  HAPPY BIRTHDAY ANNA MAY WONG  "));
@@ -31,7 +31,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 7:  strcpy(timePhrase, PSTR("        KALA CHRISTOUGENA       "));
           break;
-        case 8:  strcpy(timePhrase, PSTR("  HAPPY BIRTHDAY ELVIS PRESLEY  "));
+        case 8:  strcpy(timePhrase, PSTR("   HAPPY BIRTHDAY DAVID BOWIE   ")); // also Elvis Presley
           break;
         case 13: strcpy(timePhrase, PSTR("    HAPPY OLD NEW YEAR'S EVE    "));
           break;
@@ -161,7 +161,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 12: strcpy(timePhrase, PSTR("       HAPPY YURI'S NIGHT       "));
           break;
-        case 13: strcpy(timePhrase, PSTR("IT'S THOMAS JEFFERSON'S BIRTHDAY")); // also https://en.wikipedia.org/wiki/Vaisakhi
+        case 13: strcpy(timePhrase, PSTR("         HAPPY SONGKRAN         ")); // also https://en.wikipedia.org/wiki/Vaisakhi - also Thomas Jefferson's birthday
           break;
         case 14: strcpy(timePhrase, PSTR("EAT JAJANGMYEON   IT'S BLACK DAY")); // https://en.wikipedia.org/wiki/Black_Day_(South_Korea)
           break;                                                               // also https://en.wikipedia.org/wiki/Puthandu Tamil New Year
@@ -309,6 +309,8 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
         case 17: strcpy(timePhrase, PSTR("     HAPPY WORLD EMOJI DAY      "));
           break;
         case 18: strcpy(timePhrase, PSTR("    HAPPY NELSON MANDELA DAY    "));
+          break;
+        case 20: strcpy(timePhrase, PSTR(" MOON LANDING WAS TODAY IN 1969 "));
           break;
         case 22: strcpy(timePhrase, PSTR("   HAPPY PI APPROXIMATION DAY   ")); // 22/7
           break;
@@ -534,6 +536,10 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
         case 25: strcpy(timePhrase, PSTR("        MERRY CHRISTMAS         "));
           break;
         case 26: strcpy(timePhrase, PSTR("        HAPPY BOXING DAY        ")); // 1st day of Kwanzaa
+          break;
+        case 27: strcpy(timePhrase, PSTR("HAPPY BIRTHDAY MARLENE DIETRICH "));
+          break;
+        case 29: strcpy(timePhrase, PSTR("  THE BATTLE OF WOUNDED KNEE    ")); // https://en.wikipedia.org/wiki/Wounded_Knee_Massacre
           break;
         case 31: strcpy(timePhrase, PSTR("      HAPPY NEW YEAR'S EVE      "));
           break;
