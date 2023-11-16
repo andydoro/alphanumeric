@@ -18,7 +18,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
     case 1: // January
       switch (theDay) {
         case 1:  strcpy(timePhrase, PSTR("        HAPPY NEW YEAR          "));
-          break;
+          break; ni
         case 2:  strcpy(timePhrase, PSTR("        HAPPY NYINLONG          "));
           break;
         case 3:  strcpy(timePhrase, PSTR("  HAPPY BIRTHDAY ANNA MAY WONG  "));
@@ -86,9 +86,11 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 22: strcpy(timePhrase, PSTR(" GEORGE WASHINGTON'S BIRTHDAY   "));
           break;
-        case 23: strcpy(timePhrase, PSTR("IT'S EMPEROR NARUHITO'S BIRTHDAY"));
+        case 23: strcpy(timePhrase, PSTR("IT'S KAZIMIR MALEVICH'S BIRTHDAY")); // also Emperor Naruhito's birthday
           break;
         case 24: strcpy(timePhrase, PSTR("   DRAGOBETELE SARUTA FETELE    "));         // Dragobetele saruta fetele
+          break;
+        case 26: strcpy(timePhrase, PSTR("   HAPPY BIRTHDAY JOHNNY CASH   "));
           break;
         case 27: strcpy(timePhrase, PSTR("      HAPPY POLAR BEAR DAY      "));
           break;
@@ -103,6 +105,8 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
       break;
     case 3: // March
       switch (theDay) {
+        case 3:  strcpy(timePhrase, PSTR("  HAPPY BIRTHDAY GEORG CANTOR   "));
+          break;
         case 5:  strcpy(timePhrase, PSTR(" IT IS LEARN FROM LEI FENG DAY  "));
           break;
         case 8:  strcpy(timePhrase, PSTR("HAPPY INTERNATIONAL WOMEN'S DAY "));
@@ -115,20 +119,23 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           if (theHour == 13 && theMin == 59) { // 1:59 PM
             strcpy(timePhrase, PSTR("        HAPPY PI MINUTE         "));
           } else {
-            strcpy(timePhrase, PSTR("          HAPPY PI DAY          "));
+            strcpy(timePhrase, PSTR("          HAPPY PI DAY          ")); // also Einstein's birthday
           }
           break;
         case 15: strcpy(timePhrase, PSTR("   BEWARE THE IDES OF MARCH     "));
           break;
         case 17: strcpy(timePhrase, PSTR("        ERIN GO BRAGH           "));
           break;
-        case 20: strcpy(timePhrase, PSTR("     MERRY VERNAL EQUINOX       "));
+        case 19: strcpy(timePhrase, PSTR("     MERRY VERNAL EQUINOX       ")); // can move a bit
           break;
         case 21: strcpy(timePhrase, PSTR("         NOWRUZ MOBARAK         "));
           break;
         case 23: strcpy(timePhrase, PSTR("    IT IS YAUM-E-MASIH MAUD     ")); // https://en.wikipedia.org/wiki/Promised_Messiah_Day
           break;
-        // March 25 https://en.wikipedia.org/wiki/International_Day_of_Remembrance_of_the_Victims_of_Slavery_and_the_Transatlantic_Slave_Trade
+        case 25: strcpy(timePhrase, PSTR("REMEMBRANCE DAY SLAVERY VICTIMS ")); // https://en.wikipedia.org/wiki/International_Day_of_Remembrance_of_the_Victims_of_Slavery_and_the_Transatlantic_Slave_Trade
+          break;
+        case 26: strcpy(timePhrase, PSTR("   HAPPY FREE THE NIPPLE DAY    ")); // https://www.internationaldays.co/event/free-the-nipple-day/r/rece4NpmCWxkVnBnx
+          break;
         case 27: strcpy(timePhrase, PSTR("HAPPY INTERNATIONAL WHISKEY DAY "));
           break;
         case 30: strcpy(timePhrase, PSTR("         IT IS LAND DAY         "));
@@ -158,7 +165,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 14: strcpy(timePhrase, PSTR("EAT JAJANGMYEON   IT'S BLACK DAY")); // https://en.wikipedia.org/wiki/Black_Day_(South_Korea)
           break;                                                               // also https://en.wikipedia.org/wiki/Puthandu Tamil New Year
-        case 15: strcpy(timePhrase, PSTR("          HAPPY TAX DAY         "));
+        case 15: strcpy(timePhrase, PSTR("          HAPPY TAX DAY         ")); // also Lincoln assassination
           break;
         case 19: strcpy(timePhrase, PSTR("        HAPPY BICYCLE DAY       ")); // https://en.wikipedia.org/wiki/History_of_lysergic_acid_diethylamide#%22Bicycle_Day%22
           break;
@@ -172,9 +179,11 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 25: strcpy(timePhrase, PSTR("         HAPPY DNA DAY          "));
           break;
+        case 26: strcpy(timePhrase, PSTR("  IT IS CHERNOBYL DISASTER DAY  ")); //  International Chernobyl Disaster Remembrance Day
+          break;
         case 27: strcpy(timePhrase, PSTR("     GELUKKIGE VRYHEIDSDAG      ")); // Freedom Day South Africa
           break;
-        case 28: strcpy(timePhrase, PSTR("     SA DIE DE SA SARDIGNA      ")); // https://en.wikipedia.org/wiki/Sa_die_de_sa_Sardigna
+        case 28: strcpy(timePhrase, PSTR("     SA DIE DE SA SARDIGNA      ")); // https://en.wikipedia.org/wiki/Sa_die_de_sa_Sardigna - also Tristan Tzara's birthday
           break;
         case 29: strcpy(timePhrase, PSTR("         HAPPY SHOWA DAY        ")); // https://en.wikipedia.org/wiki/Sh%C5%8Dwa_Day
           break;
@@ -201,23 +210,31 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 8:  strcpy(timePhrase, PSTR("  HAPPY VICTORY IN EUROPE DAY   "));
           break;
-        case 9:  strcpy(timePhrase, PSTR("        HAPPY EUROPE DAY        "));
+        case 9:  strcpy(timePhrase, PSTR("        HAPPY EUROPE DAY        ")); // also Ghostface Killah Day
           break;
-        case 15: strcpy(timePhrase, PSTR("        IT IS NAKBA DAY         "));
+        case 11: strcpy(timePhrase, PSTR("  HAPPY BIRTHDAY SALVADOR DALI  "));
           break;
-        case 19: strcpy(timePhrase, PSTR("      HAPPY MALCOLM X DAY       "));
+        case 13: strcpy(timePhrase, PSTR("1ST RADIO BROADCAST MADE IN 1897")); // https://www.bbc.com/news/uk-england-somerset-61327062
+          break;
+        case 15: strcpy(timePhrase, PSTR("        IT IS NAKBA DAY         ")); // also Brian Eno's birthday
+          break;
+        case 17: strcpy(timePhrase, PSTR("    HAPPY BIRTHDAY ERIK SATIE   "));
+          break;
+        case 19: strcpy(timePhrase, PSTR("      HAPPY MALCOLM X DAY       ")); // https://en.wikipedia.org/wiki/Malcolm_X_Day
           break;
         case 20: strcpy(timePhrase, PSTR(" DAY OF REMEMBRANCE IN CAMBODIA "));
           break;
         case 21: strcpy(timePhrase, PSTR("  DIA DE LA AFROCOLOMBIANIDAD   "));
           break;
-        case 22: strcpy(timePhrase, PSTR("     IT IS HARVEY MILK DAY      ")); // also Al-Quds Day
+        case 22: strcpy(timePhrase, PSTR("     IT IS HARVEY MILK DAY      ")); // also Al-Quds Day - also Sun Ra's birthday
           break;
         case 25: strcpy(timePhrase, PSTR("        HAPPY AFRICA DAY        "));
           break;
         case 28: strcpy(timePhrase, s_manhattanhenge);
           break;
         case 29: strcpy(timePhrase, PSTR("       HAPPY OAK APPLE DAY      "));
+          break;
+        case 31: strcpy(timePhrase, PSTR("  HAPPY NOTORIOUS B.I.G. DAY    ")); // also https://en.wikipedia.org/wiki/Tulsa_race_massacre
           break;
         default:  // if no special day, just show the time
           genTimePhrase(theHour, theMin);
@@ -250,15 +267,19 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 19: strcpy(timePhrase, PSTR("       HAPPY JUNETEENTH         "));
           break;
+        case 20: strcpy(timePhrase, PSTR("     HAPPY SUMMER SOLSTICE      ")); // can move a bit
+          break;
         case 21: strcpy(timePhrase, PSTR("     HAPPY MAKE MUSIC DAY       "));
           break;
         case 24: strcpy(timePhrase, PSTR("      HAPPY MIDSUMMER DAY       ")); // St John's Day
           break;
+        case 25: strcpy(timePhrase, PSTR("   HAPPY ANTHONY BOURDAIN DAY   "));
+          break;
         case 26: strcpy(timePhrase, PSTR("    HAPPY RATCATCHER'S DAY      ")); // https://en.wikipedia.org/wiki/Ratcatcher%27s_Day
           break;
-        case 27: strcpy(timePhrase, PSTR("    HAPPY HELEN KELLER DAY      "));
+        case 27: strcpy(timePhrase, PSTR("    HAPPY HELEN KELLER DAY      ")); // also Emma Goldman's birthday
           break;
-        case 28: strcpy(timePhrase, PSTR(" HAPPY STONEWALL LIBERATION DAY ")); // Christopher Street Day
+        case 28: strcpy(timePhrase, PSTR(" HAPPY STONEWALL LIBERATION DAY ")); // Christopher Street Day - also Franz Ferdinand assassinated
           break;
         case 30: strcpy(timePhrase, PSTR("      HAPPY ASTEROID DAY        "));
           break;
@@ -269,9 +290,11 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
       break;
     case 7: // July
       switch (theDay) {
-        case 1:  strcpy(timePhrase, PSTR("      BONNE FETE DU CANADA      ")); //Bonne Fete du Canada
+        case 1:  strcpy(timePhrase, PSTR("      BONNE FETE DU CANADA      ")); // Bonne Fete du Canada - also H-bomb test in Bikini, 1946
           break;
         case 4:  strcpy(timePhrase, PSTR("     HAPPY INDEPENDENCE DAY     "));
+          break;
+        case 5:  strcpy(timePhrase, PSTR("         HAPPY BIKINI DAY       "));
           break;
         case 7:  strcpy(timePhrase, PSTR("       HAPPY QIXI FESTIVAL      "));
           break;
@@ -280,6 +303,8 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
         case 13: strcpy(timePhrase, s_manhattanhenge);
           break;
         case 14: strcpy(timePhrase, PSTR("    JOYEUX QUATORZE JUILLET     ")); // Bastille Day
+          break;
+        case 16: strcpy(timePhrase, PSTR(" TRINITY TEST WAS TODAY IN 1945 ")); // https://en.wikipedia.org/wiki/Trinity_(nuclear_test)
           break;
         case 17: strcpy(timePhrase, PSTR("     HAPPY WORLD EMOJI DAY      "));
           break;
@@ -290,6 +315,8 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
         case 23: strcpy(timePhrase, PSTR("HAPPY BIRTHDAY HAILE SELASSIE I "));
           break;
         case 26: strcpy(timePhrase, PSTR("    FELICAN ESPERANTAN TAGON    ")); // feliĉan esperantan tagon
+          break;
+        case 28: strcpy(timePhrase, PSTR(" HAPPY BIRTHDAY MARCEL DUCHAMP  "));
           break;
         default:  // if no special day, just show the time
           genTimePhrase(theHour, theMin);
@@ -304,7 +331,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 4:  strcpy(timePhrase, PSTR("      HAPPY BARACK OBAMA DAY    "));
           break;
-        case 6:  strcpy(timePhrase, PSTR("        IT IS HIROSHIMA DAY     "));
+        case 6:  strcpy(timePhrase, PSTR("        IT IS HIROSHIMA DAY     ")); // also Andy Warhol's birthday
           break;
         case 8:  strcpy(timePhrase, PSTR("NEVER FORGET   THE 8888 UPRISING")); // Burma     also international Cat Day
           break;
@@ -316,6 +343,8 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 17: strcpy(timePhrase, PSTR("     HAPPY MARCUS GARVEY DAY    "));
           break;
+        case 20: strcpy(timePhrase, PSTR(" VOYAGER 2 LAUNCHED TODAY 1977  ")); // https://en.wikipedia.org/wiki/Voyager_2
+          break;
         default:  // if no special day, just show the time
           genTimePhrase(theHour, theMin);
           break;
@@ -323,9 +352,15 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
       break;
     case 9: // September
       switch (theDay) {
-        case 9:  strcpy(timePhrase, PSTR("   ATTICA ATTICA ATTICA ATTICA  ")); // Attica uprising
+        case 1:  strcpy(timePhrase, PSTR("WORLD WAR II BEGAN TODAY IN 1939"));
+          break;
+        case 5:  strcpy(timePhrase, PSTR(" VOYAGER 1 LAUNCHED TODAY 1977  ")); // https://en.wikipedia.org/wiki/Voyager_1
+          break;
+        case 9:  strcpy(timePhrase, PSTR("  ATTICA ATTICA ATTICA ATTICA   ")); // Attica uprising
           break;
         case 11: strcpy(timePhrase, PSTR("NEVER FORGET                9/11")); // also Enkutatash, Ethiopian/Eritrean New Year
+          break;
+        case 14: strcpy(timePhrase, PSTR(" HAPPY BIRTHDAY MARGARET SANGER ")); // https://en.wikipedia.org/wiki/Margaret_Sanger
           break;
         case 16: strcpy(timePhrase, PSTR("VIVA LA INDEPENDENCIA DE MEXICO ")); // Mexican Independence Day
           break;
@@ -354,7 +389,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 9:  strcpy(timePhrase, PSTR("     HAPPY LEIF ERIKSON DAY     "));
           break;
-        case 10: strcpy(timePhrase, PSTR("      HAPPY DOUBLE TEN DAY      ")); // https://en.wikipedia.org/wiki/National_Day_of_the_Republic_of_China
+        case 10: strcpy(timePhrase, PSTR("      IT IS MORRISSEY DAY       ")); // also https://en.wikipedia.org/wiki/National_Day_of_the_Republic_of_China
           break;
         case 11: strcpy(timePhrase, PSTR(" HAPPY INDIGENOUS PEOPLES' DAY  "));
           break;
@@ -372,11 +407,13 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 24: strcpy(timePhrase, PSTR("    IT IS UNITED NATIONS DAY    "));
           break;
-        case 25: strcpy(timePhrase, PSTR("     IT IS RETROCESSION DAY     "));
+        case 25: strcpy(timePhrase, PSTR("  HAPPY BIRTHDAY PABLO PICASSO  ")); // also Retrocession Day
           break;
         case 26: strcpy(timePhrase, PSTR("  IT IS INTERSEX AWARENESS DAY  "));
           break;
         case 28: strcpy(timePhrase, PSTR(" IT IS NATIONAL IMMIGRANTS DAY  "));
+          break;
+        case 29: strcpy(timePhrase, PSTR("1969 FIRST ARPANET MESSAGE SENT ")); // https://phrasee.co/news/a-brief-history-of-email/
           break;
         case 30: strcpy(timePhrase, PSTR("      IT IS DEVIL'S NIGHT       ")); // also Aboriginal Murador new year
           break;
@@ -401,7 +438,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 7:  strcpy(timePhrase, PSTR(" IT IS OCTOBER REVOLUTION DAY   "));
           break;
-        case 9:  strcpy(timePhrase, PSTR("THE BERLIN WALL FELL ON THIS DAY")); // World Freedom Day
+        case 9:  strcpy(timePhrase, PSTR("THE BERLIN WALL FELL ON THIS DAY")); // World Freedom Day - also Wu-Tang Clan Day
           break;
         case 10: strcpy(timePhrase, PSTR("    HEUTE IST MARTINISINGEN     "));
           break;
@@ -411,19 +448,35 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 13: strcpy(timePhrase, PSTR("LET'S DANCE    SADIE HAWKINS DAY"));
           break;
-        case 15: strcpy(timePhrase, PSTR("  DAY OF THE IMPRISONED WRITER  "));
+        case 15: strcpy(timePhrase, PSTR("  HAPPY OL' DIRTY BASTARD DAY   ")); // also Day of the Imprisoned Writer
           break;
-        case 20: strcpy(timePhrase, PSTR(" TRANSGENDER DAY OF REMEMBRANCE "));
+        case 16: strcpy(timePhrase, PSTR("ARECIBO MESSAGE SENT TODAY 1974 "));
           break;
-        case 21: strcpy(timePhrase, PSTR("      HAPPY BIRTHDAY BJORK      "));
+        case 17: strcpy(timePhrase, PSTR("SUEZ CANAL OPENED TODAY IN 1869 ")); // also Nixon said "I am not a crook" in 1973
+          break;
+        case 18: strcpy(timePhrase, PSTR("JONESTOWN MASSACRE TODAY IN 1978"));
+          break;
+        case 19: strcpy(timePhrase, PSTR("GETTYSBURG ADDRESS GIVEN IN 1863"));
+          break;
+        case 20: strcpy(timePhrase, PSTR(" TRANSGENDER DAY OF REMEMBRANCE ")); // also Nuremburg trials begin
+          break;
+        case 21: strcpy(timePhrase, PSTR("      HAPPY BIRTHDAY BJORK      ")); // also arpanet invented in 1969
           break;
         case 22: strcpy(timePhrase, PSTR("JFK WAS ASSASSINATED ON THIS DAY"));
           break;
+        case 23: strcpy(timePhrase, PSTR("  HAPPY BIRTHDAY EL LISSITZKY   "));
+          break;
         case 24: strcpy(timePhrase, PSTR("      HAPPY EVOLUTION DAY       "));
+          break;
+        case 25: strcpy(timePhrase, PSTR("ELIAN GONZALEZ WAS FOUND AT SEA "));
+          break;
+        case 26: strcpy(timePhrase, PSTR(" HAPPY BIRTHDAY EUGENE IONESCO  "));
           break;
         case 27: strcpy(timePhrase, PSTR("    HAPPY BIRTHDAY BRUCE LEE    "));
           break;
         case 28: strcpy(timePhrase, PSTR("IT IS THE START OF NATIVITY FAST"));
+          break;
+        case 29: strcpy(timePhrase, PSTR("HAPPY BIRTHDAY LOUISA MAY ALCOTT"));
           break;
         case 30: strcpy(timePhrase, PSTR("    HAPPY SAINT ANDREW'S DAY    "));
           break;
@@ -434,7 +487,13 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
       break;
     case 12: // December
       switch (theDay) {
-        case 1:  strcpy(timePhrase, PSTR("     IT IS WORLD AIDS DAY       "));
+        case 1:  strcpy(timePhrase, PSTR("      IT IS WORLD AIDS DAY      "));
+          break;
+        case 2:  strcpy(timePhrase, PSTR("NAPOLEAN CROWNED HIMSELF EMPEROR"));
+          break;
+        case 3:  strcpy(timePhrase, PSTR("   IT IS BHOPAL DISASTER DAY    "));
+          break;
+        case 4:  strcpy(timePhrase, PSTR("HAPPY BIRTHDAY CHIEF CRAZY HORSE"));
           break;
         case 5:  strcpy(timePhrase, PSTR("      GRUSS VOM KRAMPUS         ")); // also Repeal Day
           break;
@@ -442,15 +501,29 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 8:  strcpy(timePhrase, PSTR("       HAPPY BODHI DAY          "));
           break;
+        case 9:  strcpy(timePhrase, PSTR("   HAPPY BIRTHDAY JOHN MILTON   "));
+          break;
         case 10: strcpy(timePhrase, PSTR("    HAPPY HUMAN RIGHTS DAY      "));
+          break;
+        case 11: strcpy(timePhrase, PSTR(" HAPPY BDAY FIORELLO LA GUARDIA "));
+          break;
+        case 12: strcpy(timePhrase, PSTR("  HAPPY BIRTHDAY FRANK SINATRA  "));
           break;
         case 13: strcpy(timePhrase, PSTR(" NANKING MASSACRE MEMORIAL DAY  "));
           break;
         case 14: strcpy(timePhrase, PSTR("        HAPPY MONKEY DAY        "));
           break;
+        case 15: strcpy(timePhrase, PSTR("    HAPPY BILL OF RIGHTS DAY    ")); // https://en.wikipedia.org/wiki/United_States_Bill_of_Rights#Display_and_honoring_of_the_Bill_of_Rights
+          break;
+        case 16: strcpy(timePhrase, PSTR("  HAPPY BIRTHDAY PHILIP K DICK  "));
+          break;
         case 17: strcpy(timePhrase, PSTR("        IO SATURNALIA           "));
           break;
-        case 20: strcpy(timePhrase, PSTR("       HAPPY FOREFEAST          "));
+        case 18: strcpy(timePhrase, PSTR("IT'S INTERNATIONAL MIGRANTS DAY ")); // https://en.wikipedia.org/wiki/International_Migrants_Day
+          break;
+        case 19: strcpy(timePhrase, PSTR("    HAPPY GOA LIBERATION DAY    ")); // https://en.wikipedia.org/wiki/Goa_Liberation_Day
+          break;
+        case 20: strcpy(timePhrase, PSTR("       HAPPY FOREFEAST          ")); // also first website created
           break;
         case 21: strcpy(timePhrase, PSTR("     MERRY WINTER SOLSTICE      "));
           break;
