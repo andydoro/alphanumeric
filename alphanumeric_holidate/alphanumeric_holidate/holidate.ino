@@ -41,9 +41,15 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 16: strcpy(timePhrase, PSTR("MARTIN LUTHER KING JR'S BIRTHDAY"));
           break;
+        case 17: strcpy(timePhrase, PSTR(" HAPPY START OF PATRAS CARNIVAL ")); // https://en.wikipedia.org/wiki/Patras_Carnival - also Ryuichi Sakamoto's birthday
+          break;
+        case 18: strcpy(timePhrase, PSTR("   HAPPY BIRTHDAY CARY GRANT    "));
+          break;
         case 19: strcpy(timePhrase, PSTR("          HAPPY TIMKAT          ")); //https://en.wikipedia.org/wiki/Timkat
           break;
         case 20: strcpy(timePhrase, PSTR("     IT IS INAUGURATION DAY     ")); // check year? (y % 4 == 1)but we gotta pass that through...
+          break;
+        case 22: strcpy(timePhrase, PSTR("    HAPPY BIRTHDAY SAM COOKE    "));
           break;
         case 24: strcpy(timePhrase, PSTR("JOLLY BELLY LAUGH DAY   HA HA HA"));
           break;
@@ -333,7 +339,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 4:  strcpy(timePhrase, PSTR("      HAPPY BARACK OBAMA DAY    "));
           break;
-        case 6:  strcpy(timePhrase, PSTR("        IT IS HIROSHIMA DAY     ")); // also Andy Warhol's birthday
+        case 6:  strcpy(timePhrase, PSTR("       IT IS HIROSHIMA DAY      ")); // also Andy Warhol's birthday
           break;
         case 8:  strcpy(timePhrase, PSTR("NEVER FORGET   THE 8888 UPRISING")); // Burma     also international Cat Day
           break;
@@ -346,6 +352,8 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
         case 17: strcpy(timePhrase, PSTR("     HAPPY MARCUS GARVEY DAY    "));
           break;
         case 20: strcpy(timePhrase, PSTR(" VOYAGER 2 LAUNCHED TODAY 1977  ")); // https://en.wikipedia.org/wiki/Voyager_2
+          break;
+        case 27: strcpy(timePhrase, PSTR("     HAPPY BIRTHDAY MAN RAY     "));
           break;
         default:  // if no special day, just show the time
           genTimePhrase(theHour, theMin);
