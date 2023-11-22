@@ -41,7 +41,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 14: strcpy(timePhrase, PSTR("      HAPPY OLD NEW YEAR        ")); // orthodox new year https://en.wikipedia.org/wiki/Old_New_Year
           break;
-case 15: strcpy(timePhrase, PSTR("   IT IS NATIONAL NOTHING DAY   ")); also https://en.wikipedia.org/wiki/Carmentalia
+        case 15: strcpy(timePhrase, PSTR("   IT IS NATIONAL NOTHING DAY   ")); //also https://en.wikipedia.org/wiki/Carmentalia
           break;
         case 16: strcpy(timePhrase, PSTR("MARTIN LUTHER KING JR'S BIRTHDAY"));
           break;
@@ -76,7 +76,7 @@ case 15: strcpy(timePhrase, PSTR("   IT IS NATIONAL NOTHING DAY   ")); also http
       break;
     case 2: // February
       switch (theDay) {
-        case 1:  strcpy(timePhrase, PSTR("         HAPPY IMBOLC           "));
+        case 1:  strcpy(timePhrase, PSTR("         HAPPY IMBOLC           ")); // also Candlemas
           break;
         case 2:  strcpy(timePhrase, PSTR("      HAPPY GROUNDHOG DAY       "));
           break;
