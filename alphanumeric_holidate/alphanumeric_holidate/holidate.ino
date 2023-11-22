@@ -309,7 +309,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 24: strcpy(timePhrase, PSTR("      HAPPY MIDSUMMER DAY       ")); // St John's Day
           break;
-        case 25: strcpy(timePhrase, PSTR("   HAPPY ANTHONY BOURDAIN DAY   "));
+        case 25: strcpy(timePhrase, PSTR("   HAPPY ANTHONY BOURDAIN DAY   ")); // also George Orwell's birthday
           break;
         case 26: strcpy(timePhrase, PSTR("    HAPPY RATCATCHER'S DAY      ")); // https://en.wikipedia.org/wiki/Ratcatcher%27s_Day
           break;
@@ -397,13 +397,21 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 20: strcpy(timePhrase, PSTR(" VOYAGER 2 LAUNCHED TODAY 1977  ")); // https://en.wikipedia.org/wiki/Voyager_2
           break;
-        case 21: strcpy(timePhrase, PSTR("         FELIX CONSUALIA        ")); // https://en.wikipedia.org/wiki/Consualia
+        case 21: strcpy(timePhrase, PSTR("        FELIX CONSUALIA         ")); // https://en.wikipedia.org/wiki/Consualia
           break;
-        case 23: strcpy(timePhrase, PSTR("         FELIX VULCANALIA       ")); // https://en.wikipedia.org/wiki/Vulcanalia
+        case 23: strcpy(timePhrase, PSTR("        FELIX VULCANALIA        ")); // https://en.wikipedia.org/wiki/Vulcanalia
           break;
-        case 25: strcpy(timePhrase, PSTR("         FELIX OPICONSIVIA      ")); // https://en.wikipedia.org/wiki/Opiconsivia
+        case 25: strcpy(timePhrase, PSTR("        FELIX OPICONSIVIA       ")); // https://en.wikipedia.org/wiki/Opiconsivia
           break;
-        case 27: strcpy(timePhrase, PSTR("         FELIX VOLTURNALIA      ")); // https://en.wikipedia.org/wiki/Volturnalia also Man Ray's birthday
+        case 27: strcpy(timePhrase, PSTR("        FELIX VOLTURNALIA       ")); // https://en.wikipedia.org/wiki/Volturnalia also Man Ray's birthday
+          break;
+        case 28: strcpy(timePhrase, PSTR("  MLK JR SAID 'I HAVE A DREAM'  ")); // also Goethe's birthday
+          break;
+        case 29: strcpy(timePhrase, PSTR(" SOVIETS GOT THE A-BOMB IN 1949 "));
+          break;
+        case 30: strcpy(timePhrase, PSTR("HURRICAN KATRINA STRUCK IN 2005 "));
+          break;
+        case 31: strcpy(timePhrase, PSTR("  REST IN PEACE PRINCESS DIANA  "));
           break;
         default:  // if no special day, just show the time
           genTimePhrase(theHour, theMin);
@@ -414,6 +422,8 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
       switch (theDay) {
         case 1:  strcpy(timePhrase, PSTR("WORLD WAR II BEGAN TODAY IN 1939"));
           break;
+        case 4:  strcpy(timePhrase, PSTR("  HAPPY BIRTHDAY RICHARD WRIGHT "));
+          break
         case 5:  strcpy(timePhrase, PSTR(" VOYAGER 1 LAUNCHED TODAY 1977  ")); // https://en.wikipedia.org/wiki/Voyager_1
           break;
         case 9:  strcpy(timePhrase, PSTR("  ATTICA ATTICA ATTICA ATTICA   ")); // Attica uprising
@@ -462,6 +472,8 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
         case 14: strcpy(timePhrase, PSTR("    HAPPY WORLD STANDARDS DAY   "));
           break;
         case 15: strcpy(timePhrase, PSTR("    HAPPY BIRTHDAY FELA KUTI    ")); // also Nietzsche's birthday
+          break;
+        case 16: strcpy(timePhrase, PSTR("   HAPPY BIRTHDAY OSCAR WILDE   ")); 
           break;
         case 17: strcpy(timePhrase, PSTR("      IT IS DESSALINES DAY      "));
           break;
@@ -526,7 +538,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 20: strcpy(timePhrase, PSTR(" TRANSGENDER DAY OF REMEMBRANCE ")); // also Nuremburg trials begin
           break;
-        case 21: strcpy(timePhrase, PSTR("      HAPPY BIRTHDAY BJORK      ")); // also arpanet invented in 1969
+        case 21: strcpy(timePhrase, PSTR("      HAPPY BIRTHDAY BJORK      ")); // also Arpanet invented in 1969
           break;
         case 22: strcpy(timePhrase, PSTR("JFK WAS ASSASSINATED ON THIS DAY"));
           break;
