@@ -505,7 +505,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
         case 3:  strcpy(timePhrase, PSTR("     QATAR INDEPENDENCE DAY     "));
           break;
         case 4:  strcpy(timePhrase, PSTR("  HAPPY BIRTHDAY RICHARD WRIGHT "));
-          break
+          break;
         case 5:  strcpy(timePhrase, PSTR(" VOYAGER 1 LAUNCHED TODAY 1977  ")); // https://en.wikipedia.org/wiki/Voyager_1
           break;
         case 6:  strcpy(timePhrase, PSTR("           SOMHLOLO DAY         ")); // Eswatini Independence Day
