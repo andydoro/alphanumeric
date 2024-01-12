@@ -12,7 +12,7 @@
 #include "truisms.h"
 
 // how long is the slogan list?
-#define ARRAYLENGTH 42
+#define ARRAYLENGTH 51
 
 //#define NUMCHARS 32
 //#define NUMALPHAS 8
