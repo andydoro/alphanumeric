@@ -1,7 +1,5 @@
 /*
-   displays some slogans / truisms randomly
-
-   from Truisms by Jenny Holzer 1978-87
+   displays some names in order
 */
 #include <avr/pgmspace.h>
 #include <Wire.h>
@@ -9,21 +7,24 @@
 #include "Adafruit_GFX.h"
 #include "Alphanum32.h"
 
-#include "truisms.h"
+#include "list.h"
 
 // how long is the slogan list?
-#define ARRAYLENGTH 51
+#define ARRAYLENGTH 113
 
-//#define NUMCHARS 32
+#define NUMCHARS 32
 //#define NUMALPHAS 8
 
 // use physical processes to make pseudorandom more pseudorandom
-#define RANDOMPIN 0
+//#define RANDOMPIN 0
 
-#define COUNTERLIMIT 400
+#define COUNTERLIMIT 300
 
+#define STARTUPCOUNTER 55
 
 int counter = 0;
+
+int whichName = 0;
 
 // how fast the letters flip
 #define FLIPUPDELAY 7
@@ -32,7 +33,7 @@ int counter = 0;
 
 // makes them all clear
 
-char tempString[33] = {' ', ' ', ' ', ' ',
+char tempString[NUMCHARS + 1] = {' ', ' ', ' ', ' ',
                                  ' ', ' ', ' ', ' ',
                                  ' ', ' ', ' ', ' ',
                                  ' ', ' ', ' ', ' ',
@@ -43,21 +44,18 @@ char tempString[33] = {' ', ' ', ' ', ' ',
                                 };
 
 
-char theTruism[33];
+char theTruism[NUMCHARS + 1];
 
-//Adafruit_AlphaNum4 alpha[NUMALPHAS];
 Alphanum32 myAlphanum;
+
 
 void setup() {
   // put your setup code here, to run once:
 
-  delay(1000);
-
-  Serial.begin(115200);
+  //Serial.begin(115200);
 
   //make it more pseudorandom!
-  randomSeed(analogRead(RANDOMPIN));
-
+  //randomSeed(analogRead(RANDOMPIN));
 
   // initialize all NUMALPHAS and clear
   myAlphanum.begin();
@@ -65,8 +63,8 @@ void setup() {
   myAlphanum.brightness(DAYBRIGHTNESS);
   myAlphanum.write();
 
-  // display each LED segment - check for bad connections
 
+  // display each LED segment - check for bad connections
   myAlphanum.displayAllSegs(20);
 
   delay(1000);
@@ -75,14 +73,12 @@ void setup() {
 
   delay(500);
 
-  strcpy(theTruism, PSTR("TRUISMS BY JENNY HOLZER 1978-87 "));
+  strcpy(theTruism, PSTR("       BLACK LIVES MATTER       "));
 
-  for (uint8_t i = 0; i < 70; i++) { // enough cycles to get there
+  for (uint8_t i = 0; i < STARTUPCOUNTER; i++) { // enough cycles to get there
     morphStrings();
     setChars();
-    //writeDisplays();
     myAlphanum.write();
-    //Serial.println("write displays");
     delay(FLIPUPDELAY);
   }
   delay(500);
@@ -92,15 +88,18 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
 
-  // choose random truism every so often
-
   if (counter > COUNTERLIMIT) {
-    strcpy_P(theTruism, (char*)pgm_read_word(&(truisms[int(random(ARRAYLENGTH))])));
-    // add blanks to end of truism
-    int blanks = 32 - strlen(theTruism);
-    memmove(theTruism + blanks, theTruism, strlen(theTruism));
-    for (int i = 0; i < blanks; i++) {
-      theTruism[i] = ' ';
+    strcpy_P(theTruism, (char*)pgm_read_word(&(truisms[whichName])));
+
+    // alternate justification
+    if (whichName % 2 == 0) {
+      rightJustify();
+    } else {
+      leftJustify();
+    }
+    whichName++; // go to next one
+    if (whichName >= ARRAYLENGTH) {
+      whichName = 0;
     }
     counter = 0;
   }
@@ -110,9 +109,9 @@ void loop() {
   setChars();
 
   myAlphanum.write();
+
   counter++;
 
   delay(FLIPUPDELAY);
-
 
 }

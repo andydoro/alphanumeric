@@ -1,5 +1,6 @@
+
 void morphStrings() {
-  for (uint8_t j = 0 ; j < 32; j++) {
+  for (uint8_t j = 0 ; j < NUMCHARS; j++) {
     if ( !(tempString[j] == theTruism[j]) ) { // if the chars doesn't match...
       tempString[j] = tempString[j] + 1;
       // rollover

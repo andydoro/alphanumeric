@@ -7,14 +7,15 @@
 #include <Wire.h>
 #include "Adafruit_LEDBackpack.h"
 #include "Adafruit_GFX.h"
+#include "Alphanum32.h"
 
 #include "truisms.h"
 
 // how long is the slogan list?
-#define ARRAYLENGTH 42
+#define ARRAYLENGTH 51
 
-#define NUMCHARS 32
-#define NUMALPHAS 8
+//#define NUMCHARS 32
+//#define NUMALPHAS 8
 
 // use physical processes to make pseudorandom more pseudorandom
 #define RANDOMPIN 0
@@ -31,7 +32,7 @@ int counter = 0;
 
 // makes them all clear
 
-char tempString[NUMCHARS + 1] = {' ', ' ', ' ', ' ',
+char tempString[33] = {' ', ' ', ' ', ' ',
                                  ' ', ' ', ' ', ' ',
                                  ' ', ' ', ' ', ' ',
                                  ' ', ' ', ' ', ' ',
@@ -42,10 +43,10 @@ char tempString[NUMCHARS + 1] = {' ', ' ', ' ', ' ',
                                 };
 
 
-char theTruism[NUMCHARS + 1];
+char theTruism[33];
 
-Adafruit_AlphaNum4 alpha[NUMALPHAS];
-
+//Adafruit_AlphaNum4 alpha[NUMALPHAS];
+Alphanum32 myAlphanum;
 
 void setup() {
   // put your setup code here, to run once:
@@ -59,18 +60,18 @@ void setup() {
 
 
   // initialize all NUMALPHAS and clear
-  for (uint8_t i = 0; i < NUMALPHAS; i++) {
-    alpha[i].begin(0x70 + i); // pass in the addresses
-    alpha[i].clear();
-    alpha[i].setBrightness(DAYBRIGHTNESS); // quarter brightness
-    alpha[i].writeDisplay();
-  }
+  myAlphanum.begin();
+  myAlphanum.clear();
+  myAlphanum.brightness(DAYBRIGHTNESS);
+  myAlphanum.write();
 
   // display each LED segment - check for bad connections
 
-  displayAllSegs();
+  myAlphanum.displayAllSegs(20);
 
-  displayAllChars();
+  delay(1000);
+
+  myAlphanum.displayAllChars(20);
 
   delay(500);
 
@@ -78,11 +79,9 @@ void setup() {
 
   for (uint8_t i = 0; i < 70; i++) { // enough cycles to get there
     morphStrings();
-
     setChars();
-
-    writeDisplays();
-
+    //writeDisplays();
+    myAlphanum.write();
     //Serial.println("write displays");
     delay(FLIPUPDELAY);
   }
@@ -110,8 +109,7 @@ void loop() {
 
   setChars();
 
-  writeDisplays();
-
+  myAlphanum.write();
   counter++;
 
   delay(FLIPUPDELAY);
