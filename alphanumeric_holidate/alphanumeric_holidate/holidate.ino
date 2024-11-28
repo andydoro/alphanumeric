@@ -582,7 +582,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 8:  strcpy(timePhrase, PSTR("        DEN NA NEZAVISNOSTA     ")); // https://en.wikipedia.org/wiki/Independence_Day_(North_Macedonia)
           break;
-        case 9:  strcpy(timePhrase, PSTR("  ATTICA ATTICA ATTICA ATTICA   ")); // Attica uprising
+        case 9:  strcpy(timePhrase, PSTR(" IT IS THE EIGHTEENTH BRUMAIRE  ")); // also Attica uprising
           break;
         case 11: strcpy(timePhrase, PSTR("NEVER FORGET                9/11")); // also Enkutatash, Ethiopian/Eritrean New Year
           break;
@@ -598,7 +598,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 17: strcpy(timePhrase, PSTR("     HAPPY CONSTITUTION DAY     ")); // also feast day of Hildegard von Bingen
           break;
-        case 18: strcpy(timePhrase, PSTR("VIVA LA INDEPENDENCIA DE CHILE ")); // Chile Independence Day
+        case 18: strcpy(timePhrase, PSTR(" VIVA LA INDEPENDENCIA DE CHILE ")); // Chile Independence Day
           break;
         case 19: strcpy(timePhrase, PSTR("AHOY ME MATIES     AAAAAARRRRRRR")); // talk like a priate day
           break;
