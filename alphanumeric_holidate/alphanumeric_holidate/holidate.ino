@@ -342,7 +342,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 23: strcpy(timePhrase, PSTR("       FELIX TUBILUSTRIUM       ")); // https://en.wikipedia.org/wiki/Tubilustrium
           break;
-        case 24: strcpy(timePhrase, PSTR("   ERITREAN INDEPENDENCE DAY    ")); // https://en.wikipedia.org/wiki/Independence_Day_(Eritrea)
+        case 24: strcpy(timePhrase, PSTR(" HAPPY BROOKLYN BRIDGE BIRTHDAY ")); // also https://en.wikipedia.org/wiki/Independence_Day_(Eritrea)
           break;
         case 25: strcpy(timePhrase, PSTR("        HAPPY AFRICA DAY        "));
           break;
