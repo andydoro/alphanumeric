@@ -61,10 +61,6 @@ Alphanum32 myAlphanum;
 RTC_DS3231 rtc; // clock object
 DST_RTC dst; // dst object
 
-// Define US or EU rules for DST comment out as required. More countries could be added with different rules in DST_RTC.cpp
-//const char rulesDST[] = "US"; // US DST rules
-// const char rulesDST[] = "EU";   // EU DST rules
-
 
 // brightness based on time of day
 // 0-15
