@@ -85,11 +85,7 @@ char sunsetPhrase[NUMCHARS + 1];
 Alphanum32 myAlphanum;
 
 RTC_DS3231 rtc; // clock object
-DST_RTC dst; // dst object
-
-// Define US or EU rules for DST comment out as required. More countries could be added with different rules in DST_RTC.cpp
-const char rulesDST[] = "US"; // US DST rules
-// const char rulesDST[] = "EU";   // EU DST rules
+DST_RTC dst(0);  // dst object - 0 indicates US DST ruleset
 
 // brightness based on time of day
 // 0-15
@@ -173,9 +169,6 @@ void setup() {
     ss.setGPIOInterrupts((uint32_t)1 << SS_SWITCH, 1);
     ss.enableEncoderInterrupt();
   }
-
-
-
 
   if (! rtc.begin()) {
     Serial.println(F("Couldn't find RTC"));
