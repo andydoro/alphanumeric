@@ -549,6 +549,8 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 25: strcpy(timePhrase, PSTR("        FELIX OPICONSIVIA       ")); // https://en.wikipedia.org/wiki/Opiconsivia
           break;
+        case 26: strcpy(timePhrase, PSTR("  HAPPY WOMEN'S EQUALITY DAY    ")); // https://en.wikipedia.org/wiki/Women%27s_Equality_Day
+          break;
         case 27: strcpy(timePhrase, PSTR("        FELIX VOLTURNALIA       ")); // https://en.wikipedia.org/wiki/Volturnalia also Man Ray's birthday
           break;
         case 28: strcpy(timePhrase, PSTR("  MLK JR SAID 'I HAVE A DREAM'  ")); // also Goethe's birthday
@@ -584,6 +586,8 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 9:  strcpy(timePhrase, PSTR(" IT IS THE EIGHTEENTH BRUMAIRE  ")); // also Attica uprising
           break;
+        case 10: strcpy(timePhrase, PSTR("       IT IS R U OK? DAY        ")); // https://en.wikipedia.org/wiki/R_U_OK%3F
+          break;
         case 11: strcpy(timePhrase, PSTR("NEVER FORGET                9/11")); // also Enkutatash, Ethiopian/Eritrean New Year
           break;
         case 12: strcpy(timePhrase, PSTR("   HAPPY BIRTHDAY JESSE OWENS   "));
@@ -600,7 +604,7 @@ void holidate(byte theMon, byte theDay, byte theHour, byte theMin) {
           break;
         case 18: strcpy(timePhrase, PSTR(" VIVA LA INDEPENDENCIA DE CHILE ")); // Chile Independence Day
           break;
-        case 19: strcpy(timePhrase, PSTR("AHOY ME MATIES     AAAAAARRRRRRR")); // talk like a priate day
+        case 19: strcpy(timePhrase, PSTR("AHOY ME MATIES     AAAAAARRRRRRR")); // Talk Like a Pirate Day
           break;
         case 20: strcpy(timePhrase, PSTR("BATTLE OF THE SEXES WAS IN 1973 ")); //
           break;
